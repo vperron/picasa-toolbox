@@ -2,6 +2,7 @@
 
 import os
 import imghdr
+import hashlib
 import exifread
 
 
@@ -30,3 +31,11 @@ def get_dirname(path):
 
 def directory2album(name):
     return None if name == '.' else name
+
+
+def md5sum(filename, blocksize=65536):
+    h = hashlib.md5()
+    with open(filename, "rb") as f:
+        for block in iter(lambda: f.read(blocksize), ''):
+            h.update(block)
+    return h.hexdigest()

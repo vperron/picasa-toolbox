@@ -8,14 +8,16 @@ Contains imported public functions.
 
 from scandir import scandir
 
-from .utils import is_jpeg, get_tags, get_filename, get_dirname, directory2album
 from .tags import parse_time, parse_width, parse_height, parse_orientation
+from .utils import (is_jpeg, get_tags, get_filename, get_dirname,
+                    directory2album, md5sum)
 
 
 class MetaImage(object):
 
-    def __init__(self, path, tags=None):
+    def __init__(self, path, checksum, tags=None):
         self.path = path
+        self.checksum = checksum
         self.name = get_filename(path)
         self.directory = get_dirname(path)
         self.album = directory2album(self.directory)
@@ -30,7 +32,7 @@ class MetaImage(object):
             except KeyError:
                 pass  # one of the tags was not found
             except ValueError:
-                pass # one of the tag values was invalid
+                pass  # one of the tag values was invalid
 
     def __repr__(self):
         return self.path
@@ -59,4 +61,34 @@ def inspect_dir(path, deep=True, follow_symlinks=False):
         if not is_jpeg(e.path):
             continue
 
-        yield MetaImage(e.path, get_tags(e.path))
+        yield MetaImage(e.path, md5sum(e.path), get_tags(e.path))
+
+
+
+
+
+APP_NAME = 'plusphotos'
+from gdata.photos.service import PhotosService
+
+def login(email, password):
+    gd_client = PhotosService()  # XXX: no way to init all at once ?
+    gd_client.email = 'perron.victor@gmail.com'
+    gd_client.password = 'APP_PASSWORD'
+    gd_client.source = APP_NAME
+    gd_client.ProgrammaticLogin()
+    return gd_client
+
+
+def list_albums(g_handle):
+    pass
+
+
+
+
+
+
+def sync_image(g_handle, img, resize=True):
+    """
+    Synchronizes an image with a remote album on Google+.
+    """
+    pass

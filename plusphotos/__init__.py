@@ -23,6 +23,11 @@ from .path import (get_tags, is_jpeg, get_filename, get_dirname, md5sum)
 from .utils import directory2album, fastwalk
 
 
+from gdata.photos.service import PhotosService
+from gdata.service import (BadAuthentication, BadAuthenticationServiceURL,
+                           Error as GDataError)
+
+
 class MetaImage(object):
 
     def __init__(self, path, checksum, tags=None):
@@ -66,4 +71,28 @@ def list_meta_images(path, deep=True):
 
 
 def list_albums(g_handle):
+    pass
+
+
+def test_gdata(email, password):
+    ps = PhotosService()  # XXX: no way to init all at once ?
+    log.debug("connecting to Google services...")
+    try:
+        ps.ClientLogin(email, password)
+    except (GDataError, BadAuthentication, BadAuthenticationServiceURL):
+        log.error('authentication failed.')
+
+    log.debug("connected. retrieving albums...")
+    albums = ps.GetUserFeed().entry
+    for album in albums:
+        print "'%s' - %d photos [pub=%s][upd=%s]" % (
+            album.title.text, int(album.numphotos.text),
+            album.published.text, album.updated.text)
+    return
+
+
+def sync_image(g_handle, img, resize=True):
+    """
+    Synchronizes an image with a remote album on Google+.
+    """
     pass

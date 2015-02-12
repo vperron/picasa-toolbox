@@ -5,7 +5,7 @@ import logging
 
 from collections import defaultdict
 
-from plusphotos import list_albums, list_meta_images, log
+from plusphotos import test_gdata, list_meta_images, log
 from plusphotos.conf import settings
 from plusphotos.utils import count_files
 
@@ -68,5 +68,7 @@ def analyze(path):
 
 
 @cli.command('list_albums')
-def listalbums():
-    list_albums()
+@click.option('--email', prompt='Your email')
+@click.option('--password', prompt=True, hide_input=True)
+def listalbums(email, password):
+    test_gdata(email, password)

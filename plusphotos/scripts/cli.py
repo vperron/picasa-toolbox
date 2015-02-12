@@ -1,41 +1,39 @@
 # -*- coding: utf-8 -*-
 
 import click
+import logging
 
 from collections import defaultdict
 
-from plusphotos import inspect_dir, list_albums
-from plusphotos.settings import Settings
+from plusphotos import list_albums, list_meta_images, log
+from plusphotos.conf import settings
+from plusphotos.utils import count_files
 
 
 @click.group()
 @click.option('--debug/--no-debug', default=False)
-@click.pass_context
-def cli(ctx, debug):
-    if not ctx.obj:
-        ctx.obj = Settings()
-    ctx.obj.DEBUG = debug
-
-
-@cli.command(help='WARNING: deprecated.')
-@click.argument('path')
-@click.pass_context
-@click.option('--good', is_flag=True, help='Only list images bearing valid tags.')
-@click.option('--bad', is_flag=True, help='Only list images not bearing tags.')
-def list_files(ctx, path, good, bad):
-    for img in inspect_dir(path):
-        if good and not bad and not img.has_exif:
-            continue
-        if bad and not good and img.has_exif:
-            continue
-
-        print img.path, img.album, img.has_exif, img.time
+def cli(debug):
+    settings.DEBUG = debug
+    if debug:
+        log.setLevel(logging.DEBUG)
 
 
 @cli.command()
 @click.argument('path')
-@click.pass_context
-def analyze(ctx, path):
+def list(path):
+    for img in list_meta_images(path, deep=True):
+        print img.name, img.has_exif
+
+
+@cli.command()
+@click.argument('path')
+def analyze(path):
+
+    # very quickly retrieve the number of files to process
+    num_files = count_files(path)
+    print "NUM FILES", num_files
+
+    # init analysis
     n_pictures_total = 0
     n_pictures_good = 0
     n_albums = 0  # XXX: warning with 'conflicting' albums, ex: foo/album/x.jpg, bar/album/y.jpg
@@ -44,7 +42,7 @@ def analyze(ctx, path):
     duplicates_hashes = set()
     albums = defaultdict(list)
 
-    for img in inspect_dir(path):
+    for img in list_meta_images(path, deep=True):
         n_pictures_total += 1
         # implements double picture detection
         if img.checksum in pictures:
@@ -69,10 +67,6 @@ def analyze(ctx, path):
             print '\t', img.path
 
 
-
-
-
 @cli.command('list_albums')
-@click.pass_context
-def listalbums(ctx):
+def listalbums():
     list_albums()

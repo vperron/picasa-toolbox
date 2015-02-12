@@ -4,4 +4,6 @@
 class Settings(object):
 
     def __init__(self):
-        pass
+        self.DEBUG = False
+
+settings = Settings()

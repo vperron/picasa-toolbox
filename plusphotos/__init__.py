@@ -8,7 +8,7 @@ Contains imported public functions.
 
 from scandir import scandir
 
-from .utils import is_jpeg, get_tags
+from .utils import is_jpeg, get_tags, get_filename, get_dirname, directory2album
 from .tags import parse_time, parse_width, parse_height, parse_orientation
 
 
@@ -16,6 +16,9 @@ class MetaImage(object):
 
     def __init__(self, path, tags=None):
         self.path = path
+        self.name = get_filename(path)
+        self.directory = get_dirname(path)
+        self.album = directory2album(self.directory)
         self.has_exif = False
         if tags:
             try:
@@ -25,13 +28,11 @@ class MetaImage(object):
                 self.orientation = parse_orientation(tags)
                 self.has_exif = True
             except KeyError:
-                pass  # one of the tags was invalid
+                pass  # one of the tags was not found
+            except ValueError:
+                pass # one of the tag values was invalid
 
     def __repr__(self):
-        if self.has_exif:
-            return "{path}, [T/W/H/O] = {time}, {width}, {height}, {orientation}".format(
-                path=self.path, time=self.time, width=self.width, height=self.height,
-                orientation=self.orientation)
         return self.path
 
     def __str__(self):
@@ -41,12 +42,16 @@ class MetaImage(object):
         return self.__repr__()
 
 
-def inspect_dir(path, follow_symlinks=False):
+def inspect_dir(path, deep=True, follow_symlinks=False):
     """
     Walks down a path, yield MetaImage objects.
     Only supports JPEG format for now.
     """
     for e in scandir(path):
+        if deep and e.is_dir():
+            # XXX: Python 2 syntax, in python3 use 'yield from'
+            for item in inspect_dir(e.path, deep, follow_symlinks):
+                yield item
         if e.is_symlink() and not follow_symlinks:
             continue
         if not e.is_file():
@@ -54,4 +59,4 @@ def inspect_dir(path, follow_symlinks=False):
         if not is_jpeg(e.path):
             continue
 
-        yield MetaImage(e.name, get_tags(e.path))
+        yield MetaImage(e.path, get_tags(e.path))

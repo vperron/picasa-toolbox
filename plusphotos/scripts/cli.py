@@ -27,4 +27,4 @@ def list(ctx, path, good, bad):
         if bad and not good and img.has_exif:
             continue
 
-        print img
+        print img.path, img.album, img.has_exif, img.time

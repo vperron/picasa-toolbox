@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from dateutil import parser
+from datetime import datetime
 
 TAG_WIDTH = 'EXIF ExifImageWidth'
 TAG_HEIGHT = 'EXIF ExifImageLength'
@@ -25,7 +25,7 @@ def parse_time(tags):
     tag = tags.get(TAG_DATETIME, None)
     if not tag:
         raise KeyError(TAG_DATETIME)
-    return parser.parse(str(tag))  # never raises
+    return datetime.strptime(str(tag), "%Y:%m:%d %H:%M:%S")
 
 
 def parse_width(tags):

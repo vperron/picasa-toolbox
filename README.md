@@ -1,7 +1,8 @@
-plusphotos
-==========
+picasa-toolbox
+==============
 
-Upload your images to Google+ Photos.
+A set of apis and tools to manage your pictures, both locally
+and online on Google+ Photos.
 
 
 Customization quick start
@@ -16,7 +17,7 @@ py.test
 Finally, give the command line program a try.
 
 ```bash
-plusphotos --help
+ptoolbox --help
 ```
 
 License

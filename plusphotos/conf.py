@@ -6,7 +6,7 @@ default_settings = {
 
     'PICASA_CLIENT': {
         'DATA_TYPE': 'json',
-        'PAGE_SIZE': 10,
+        'PAGE_SIZE': 50,
     }
 }
 

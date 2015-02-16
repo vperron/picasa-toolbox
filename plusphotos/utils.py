@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+
 from .path import fastwalk
+
+
+def iso8601str2datetime(s):
+    return datetime.strptime(s, '%Y-%m-%dT%H:%M:%S.%fZ')
 
 
 def count_files(path):

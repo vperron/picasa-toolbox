@@ -28,6 +28,6 @@ setup(name='plusphotos',
       },
       entry_points="""
       [console_scripts]
-      plusphotos=plusphotos.scripts.cli:cli
+      plusphotos=plusphotos.cli:cli
       """
       )

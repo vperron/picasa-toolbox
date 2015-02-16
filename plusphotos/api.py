@@ -4,6 +4,8 @@ import re
 import requests
 
 from .conf import settings
+from .utils import iso8601str2datetime
+from .models import GoogleAlbum
 
 
 def gvalue(data, key, prefix=None):
@@ -13,6 +15,20 @@ def gvalue(data, key, prefix=None):
     """
     key = key if prefix is None else '%s$%s' % (prefix, key)
     return data[key]['$t']
+
+
+def raw2album(raw):
+    """Returns a GoogleAlbum object from the raw JSON data.
+    """
+    res = {
+        'title': gvalue(raw, 'title'),
+        'author': gvalue(raw['author'][0], 'name'),
+        'rights': gvalue(raw, 'rights'),
+        'summary': gvalue(raw, 'summary'),
+        'updated': iso8601str2datetime(gvalue(raw, 'updated')),
+        'published': iso8601str2datetime(gvalue(raw, 'published')),
+    }
+    return GoogleAlbum(**res)
 
 
 class PicasaClient(object):
@@ -71,7 +87,7 @@ class PicasaClient(object):
             raise ValueError('could not fetch web albums')
         data = res.json()['feed']
         for album in data['entry']:
-            yield gvalue(album, 'name', 'gphoto')
+            yield raw2album(album)
         total_results = gvalue(data, 'totalResults', 'openSearch')
         remaining_results = total_results - (index + page_size - 1)
         if remaining_results > 0:

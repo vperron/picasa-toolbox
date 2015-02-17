@@ -5,15 +5,18 @@ from .path import get_filename, get_dirname
 from .tags import parse_time, parse_width, parse_height
 
 
+ACCESS_PRIVATE = 'private'
+
+
 class GoogleAlbum(object):
     """Contains methods and accessors to Google Album objects.
     """
 
-    def __init__(self, id, title, author, rights, summary, updated, published):
+    def __init__(self, id, title, author, access, summary, updated, published):
         self.id = id
         self.title = title
         self.author = author
-        self.rights = rights
+        self.access = access
         self.summary = summary
         self.updated = updated
         self.published = published

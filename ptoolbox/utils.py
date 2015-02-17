@@ -6,7 +6,9 @@ from .path import fastwalk
 
 
 def iso8601str2datetime(s):
-    return datetime.strptime(s, '%Y-%m-%dT%H:%M:%S.%fZ')
+    if s:
+        return datetime.strptime(s, '%Y-%m-%dT%H:%M:%S.%fZ')
+    return None
 
 
 def count_files(path):

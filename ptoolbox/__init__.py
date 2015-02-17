@@ -76,19 +76,23 @@ def upload_folder(client, path, warn=True, resize=True, force_push=False, remote
     remote_images = {}
 
     for img in list_valid_images(path):
+
+        # get or create album from its title (directory name)
         title = img.album_title if img.album_title else settings.DEFAULT_ALBUM
-        if title in albums.keys():
+        if title and title in albums.keys():
             album = albums[title]
         else:
-            # create the album ? ask for what to do ? stop here ?
-            # maybe the best option would be to list local & remote albums
-            # first, arn about differences and only sync already present ?
-            continue
-            raise NotImplementedError
-        log.debug("uploading image '%s' from album '%s' [%s]" % (img.name, album.title, album.id))
+            log.debug("creating album '%s'" % title)
+            album = client.create_album(title)
+
+        # fetch list of album images if necessary
         if album.id not in remote_images:
+            log.debug("getting list of images for album '%s'" % album.title)
             remote_images[album.id] = [rimg for rimg in client.fetch_images(album.id)]
             for x in remote_images[album.id]:
                 log.debug("\tremote %s - '%s' [%dx%d]" % (
                     x.time.isoformat(), x.title, x.width, x.height))
+
+        # upload image
+        log.debug("uploading image '%s' from album '%s' [%s]" % (img.name, album.title, album.id))
         upload_image(client, img, album.id, warn, resize, force_push, remote_images[album.id])

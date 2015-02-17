@@ -10,7 +10,7 @@ default_settings = {
 
     'DEBUG': False,
 
-    'DEFAULT_ALBUM': 'ptoolbox',
+    'DEFAULT_ALBUM': None,
     'ALBUM_STRATEGY': ALBUM_STRATEGY_USE_DEFAULT,
 
     'PICASA_CLIENT': {

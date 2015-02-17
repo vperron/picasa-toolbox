@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 
+"""CLI features. We can expect functions that ask for user input,
+have side effects and are heavily procedural here: it's OK.
+"""
+
 import click
 import logging
 
 from collections import defaultdict
 
-from plusphotos import list_albums, list_meta_images, log
+from plusphotos import list_valid_images, sync_folder, log
 
+from .api import PicasaClient
 from .conf import settings
 from .utils import count_files
 
@@ -22,7 +27,7 @@ def cli(debug):
 @cli.command()
 @click.argument('path')
 def list_folder(path):
-    for img in list_meta_images(path, deep=True):
+    for img in list_valid_images(path, deep=True):
         print img.name
 
 
@@ -30,9 +35,8 @@ def list_folder(path):
 @click.argument('path')
 def analyze(path):
 
-    # very quickly retrieve the number of files to process
+    # efficiently retrieve the number of files to process (first fast pass)
     num_files = count_files(path)
-    print "NUM FILES", num_files
 
     # init analysis
     n_pictures_total = 0
@@ -43,7 +47,7 @@ def analyze(path):
     duplicates_hashes = set()
     albums = defaultdict(list)
 
-    for img in list_meta_images(path, deep=True):
+    for img in list_valid_images(path, deep=True):
         n_pictures_total += 1
         # implements double picture detection
         if img.checksum in pictures:
@@ -72,4 +76,20 @@ def analyze(path):
 @click.option('--email', prompt='Your email')
 @click.option('--password', prompt=True, hide_input=True)
 def listalbums(email, password):
-    list_albums(email, password)
+    p = PicasaClient()
+    p.authenticate(email, password)
+    for album in p.fetch_albums():
+        print "%s - '%s' (%s)" % (album.published.isoformat(), album.title, album.author)
+
+
+@cli.command('sync_folder')
+@click.option('--email', prompt='Your email')
+@click.option('--password', prompt=True, hide_input=True)
+@click.option('--default_album', default=None, hide_input=True)
+@click.argument('path')
+def syncfolder(email, password, default_album, path):
+    p = PicasaClient()
+    p.authenticate(email, password)
+    if default_album:
+        settings.DEFAULT_ALBUM = default_album
+    sync_folder(p, path)

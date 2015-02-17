@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from plusphotos import log
-
-from .tags import parse_time, parse_width, parse_height, parse_orientation
-from .path import get_filename, get_dirname
 from .utils import directory2album
+from .path import get_filename, get_dirname
+from .tags import parse_time, parse_width, parse_height, parse_orientation
 
 
 class GoogleAlbum(object):
-    """Contains methods and accessors to Google Albums.
+    """Contains methods and accessors to Google Album objects.
     """
 
-    def __init__(self, title, author, rights, summary, updated, published):
+    def __init__(self, id, title, author, rights, summary, updated, published):
+        self.id = id
         self.title = title
         self.author = author
         self.rights = rights
@@ -20,9 +19,23 @@ class GoogleAlbum(object):
         self.published = published
 
 
+class GooglePhoto(object):
+    """Contains methods and accessors to Google Photo objects.
+    """
+
+    def __init__(self, id, time, title, album_id, summary, width, height):
+        self.id = id
+        self.time = time
+        self.title = title
+        self.width = width
+        self.height = height
+        self.summary = summary
+        self.album_id = album_id
+
+
 class ImageInfo(object):
     """Contains path to an image, along with a normalized name,
-    directory, album, and several tags.
+    directory, album title, and several tags.
     """
 
     def __init__(self, path, checksum, tags=None):
@@ -30,7 +43,7 @@ class ImageInfo(object):
         self.checksum = checksum
         self.name = get_filename(path)
         self.directory = get_dirname(path)
-        self.album = directory2album(self.directory)
+        self.album_title = directory2album(self.directory)
         self.has_exif = False
         if tags:
             try:
@@ -39,7 +52,7 @@ class ImageInfo(object):
                 self.height = parse_height(tags)
                 self.orientation = parse_orientation(tags)
                 self.has_exif = True
-            except KeyError, ValueError as e:
+            except (KeyError, ValueError) as e:
                 pass  # if one tag is faulty, just pass for now.
 
     def __repr__(self):
@@ -50,4 +63,3 @@ class ImageInfo(object):
 
     def __unicode__(self):
         return self.__repr__()
-

@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
 
+
+""" Define what happens when a picture does not get auto album name from folder"""
+ALBUM_STRATEGY_ASK = 'ask'  # ask the user for a default name
+ALBUM_STRATEGY_USE_DEFAULT = 'default'  # use default album name
+
+
 default_settings = {
 
     'DEBUG': False,
+
+    'DEFAULT_ALBUM': 'ptoolbox',
+    'ALBUM_STRATEGY': ALBUM_STRATEGY_USE_DEFAULT,
 
     'PICASA_CLIENT': {
         'DATA_TYPE': 'json',

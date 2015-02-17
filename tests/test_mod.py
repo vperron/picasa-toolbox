@@ -1,5 +1,5 @@
-import plusphotos
+import ptoolbox
 
 
 def test_has_legs():
-    assert not plusphotos.has_legs
+    assert not ptoolbox.has_legs

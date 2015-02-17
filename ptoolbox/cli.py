@@ -9,7 +9,7 @@ import logging
 
 from collections import defaultdict
 
-from plusphotos import list_valid_images, sync_folder, log
+from ptoolbox import list_valid_images, sync_folder, log
 
 from .api import PicasaClient
 from .conf import settings

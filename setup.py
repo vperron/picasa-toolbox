@@ -7,7 +7,7 @@ with codecs_open('README.md', encoding='utf-8') as f:
     long_description = f.read()
 
 
-setup(name='plusphotos',
+setup(name='ptoolbox',
       version='0.0.1',
       description=u"Skeleton of a Python package",
       long_description=long_description,
@@ -15,7 +15,7 @@ setup(name='plusphotos',
       keywords='',
       author=u"Victor Perron",
       author_email='victor@iso3103.net',
-      url='https://github.com/vperron/plusphotos',
+      url='https://github.com/vperron/ptoolbox',
       license='MIT',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
@@ -28,6 +28,6 @@ setup(name='plusphotos',
       },
       entry_points="""
       [console_scripts]
-      plusphotos=plusphotos.cli:cli
+      ptoolbox=ptoolbox.cli:cli
       """
       )

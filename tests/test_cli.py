@@ -1,6 +1,6 @@
 from click.testing import CliRunner
 
-from plusphotos.cli import cli
+from ptoolbox.cli import cli
 
 
 def test_cli_count():

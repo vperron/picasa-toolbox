@@ -10,7 +10,7 @@ import requests
 
 from datetime import datetime, timedelta
 
-from plusphotos import log
+from ptoolbox import log
 
 from .conf import settings
 from .utils import iso8601str2datetime

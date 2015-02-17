@@ -2,7 +2,7 @@
 
 from .utils import directory2album
 from .path import get_filename, get_dirname
-from .tags import parse_time, parse_width, parse_height, parse_orientation
+from .tags import parse_time, parse_width, parse_height
 
 
 class GoogleAlbum(object):
@@ -38,20 +38,19 @@ class ImageInfo(object):
     directory, album title, and several tags.
     """
 
-    def __init__(self, path, checksum, tags=None):
+    def __init__(self, path, checksum, tags=None, rel_path=None):
         self.path = path
         self.checksum = checksum
         self.name = get_filename(path)
         self.directory = get_dirname(path)
-        self.album_title = directory2album(self.directory)
-        self.has_exif = False
+        self.album_title = directory2album(get_dirname(rel_path if rel_path else path))
+        self.is_valid = False
         if tags:
             try:
                 self.time = parse_time(tags)
                 self.width = parse_width(tags)
                 self.height = parse_height(tags)
-                self.orientation = parse_orientation(tags)
-                self.has_exif = True
+                self.is_valid = True
             except (KeyError, ValueError) as e:
                 pass  # if one tag is faulty, just pass for now.
 

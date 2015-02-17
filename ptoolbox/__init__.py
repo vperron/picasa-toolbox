@@ -17,6 +17,8 @@ except ImportError:
 log = logging.getLogger(__name__)
 log.addHandler(logging.StreamHandler())  # TODO: use a real logging config
 
+import os
+
 from .conf import settings
 from .models import ImageInfo
 from .path import get_tags, is_jpeg, md5sum
@@ -31,7 +33,8 @@ def list_valid_images(path, deep=True):
         if not is_jpeg(e.path):
             continue
         try:
-            img = ImageInfo(e.path, md5sum(e.path), get_tags(e.path))
+            rel_path = os.path.relpath(e.path, path)
+            img = ImageInfo(e.path, md5sum(e.path), get_tags(e.path), rel_path=rel_path)
             yield img
         except KeyError, ValueError:  # we keep
             continue

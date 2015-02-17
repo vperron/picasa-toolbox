@@ -26,13 +26,6 @@ def cli(debug):
 
 @cli.command()
 @click.argument('path')
-def list_folder(path):
-    for img in list_valid_images(path, deep=True):
-        print img.name
-
-
-@cli.command()
-@click.argument('path')
 def analyze(path):
 
     # efficiently retrieve the number of files to process (first fast pass)
@@ -41,7 +34,8 @@ def analyze(path):
     # init analysis
     n_pictures_total = 0
     n_pictures_good = 0
-    n_albums = 0  # XXX: warning with 'conflicting' albums, ex: foo/album/x.jpg, bar/album/y.jpg
+    n_pictures_orphan = 0
+    n_albums = 0  # XXX: may get 'conflicting' albums, ex: foo/album/x.jpg, bar/album/y.jpg
 
     pictures = {}
     duplicates_hashes = set()
@@ -49,27 +43,31 @@ def analyze(path):
 
     for img in list_valid_images(path, deep=True):
         n_pictures_total += 1
+
         # implements double picture detection
         if img.checksum in pictures:
             duplicates_hashes.add(img.checksum)
             pictures[img.checksum].append(img)
         else:
             pictures[img.checksum] = [img]
-        # eventually add picture to album (must have EXIF)
-        if img.has_exif:
-            albums[img.album].append(img)
+        if not img.album_title:
+            n_pictures_orphan += 1
+
+        # eventually add picture to album
+        if img.is_valid and img.album_title:
+            albums[img.album_title].append(img)
             n_pictures_good += 1
 
-    print '> processed\n\t%d total images\n\t%d with valid EXIF\n\t%d duplicates' % (
-        n_pictures_total, n_pictures_good, len(duplicates_hashes))
-    print '---- albums'
+    log.info('> processed\n\t%d total images\n\t%d valid images\n\t%d orphan images\n\t%d duplicates' % (
+        n_pictures_total, n_pictures_good, n_pictures_orphan, len(duplicates_hashes)))
+    log.info('---- albums')
     for k, v in albums.iteritems():
-        print '%s: %d images' % (k, len(v))
-    print '---- double images'
+        log.info('%s: %d images' % (k, len(v)))
+    log.info('---- double images')
     for h in duplicates_hashes:
-        print h
+        log.info("hash: '%s'" % h)
         for img in pictures[h]:
-            print '\t', img.path
+            log.info('\t%s' % img.path)
 
 
 @cli.command('list_albums')

@@ -17,8 +17,6 @@ except ImportError:
 log = logging.getLogger(__name__)
 log.addHandler(logging.StreamHandler())  # TODO: use a real logging config
 
-import warnings
-
 from .conf import settings
 from .models import ImageInfo
 from .path import get_tags, is_jpeg, md5sum
@@ -39,8 +37,8 @@ def list_valid_images(path, deep=True):
             continue
 
 
-def sync_image(client, imginfo, album_id, warn=True, resize=True, force_push=False, remote_images=None):
-    """Synchronizes an image with a remote album on Google+.
+def upload_image(client, imginfo, album_id, warn=True, resize=True, force_push=False, remote_images=None):
+    """Uploads an image into a remote album on Google+ Photos.
     """
     if remote_images is None:
         remote_images = [rimg for rimg in client.fetch_images(album_id)]
@@ -61,8 +59,8 @@ def sync_image(client, imginfo, album_id, warn=True, resize=True, force_push=Fal
     pass
 
 
-def sync_folder(client, path, warn=True, resize=True, force_push=False, remote_albums=None):
-    """Synchronizes a whole folder on Google+ Photos.
+def upload_folder(client, path, warn=True, resize=True, force_push=False, remote_albums=None):
+    """Recurse upload of a whole folder on Google+ Photos.
     """
     if remote_albums is None:
         log.debug('fetching remote albums...')
@@ -84,10 +82,10 @@ def sync_folder(client, path, warn=True, resize=True, force_push=False, remote_a
             # first, arn about differences and only sync already present ?
             continue
             raise NotImplementedError
-        log.debug("sync image '%s' from album '%s' [%s]" % (img.name, album.title, album.id))
+        log.debug("uploading image '%s' from album '%s' [%s]" % (img.name, album.title, album.id))
         if album.id not in remote_images:
             remote_images[album.id] = [rimg for rimg in client.fetch_images(album.id)]
             for x in remote_images[album.id]:
                 log.debug("\tremote %s - '%s' [%dx%d]" % (
                     x.time.isoformat(), x.title, x.width, x.height))
-        sync_image(client, img, album.id, warn, resize, force_push, remote_images[album.id])
+        upload_image(client, img, album.id, warn, resize, force_push, remote_images[album.id])

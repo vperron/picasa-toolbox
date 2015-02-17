@@ -9,7 +9,7 @@ import logging
 
 from collections import defaultdict
 
-from ptoolbox import list_valid_images, sync_folder, log
+from ptoolbox import log, list_valid_images, upload_folder
 
 from .api import PicasaClient
 from .conf import settings
@@ -82,14 +82,15 @@ def listalbums(email, password):
         print "%s - '%s' (%s)" % (album.published.isoformat(), album.title, album.author)
 
 
-@cli.command('sync_folder')
+@cli.command('upload_folder')
 @click.option('--email', prompt='Your email')
 @click.option('--password', prompt=True, hide_input=True)
-@click.option('--default_album', default=None, hide_input=True)
+@click.option('--default_album', default=None, hide_input=True,
+              help='As a default, images without an album aren\'t uploaded. This sets a default one.')
 @click.argument('path')
-def syncfolder(email, password, default_album, path):
+def uploadfolder(email, password, default_album, path):
     p = PicasaClient()
     p.authenticate(email, password)
     if default_album:
         settings.DEFAULT_ALBUM = default_album
-    sync_folder(p, path)
+    upload_folder(p, path)

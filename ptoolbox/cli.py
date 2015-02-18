@@ -77,7 +77,22 @@ def listalbums(email, password):
     p = PicasaClient()
     p.authenticate(email, password)
     for album in p.fetch_albums():
-        print "%s - '%s' (%s)" % (album.published.isoformat(), album.title, album.author)
+        print "%s - '%s' [%s] (%s)" % (album.published.isoformat(), album.title, album.name, album.author)
+
+
+@cli.command('delete_album')
+@click.option('--email', prompt='Your email')
+@click.option('--password', prompt=True, hide_input=True)
+@click.option('--force', is_flag=True)
+@click.argument('title')
+def deletealbum(email, password, force, title):
+    p = PicasaClient()
+    p.authenticate(email, password)
+    for album in p.fetch_albums():
+        if title.lower() in album.name.lower():
+            if force or click.confirm("Delete you want to delete album '%s'?" % album.title):
+                p.delete_album(album.id)
+                log.info("Deleted album '%s'." % album.title)
 
 
 @cli.command('upload_folder')

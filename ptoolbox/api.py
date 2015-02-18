@@ -19,7 +19,7 @@ from .models import GoogleAlbum, GooglePhoto, ACCESS_PRIVATE
 
 ALBUM_FIELDS = ','.join((
     'gphoto:id', 'gphoto:name', 'author', 'gphoto:access', 'summary',
-    'updated', 'published'))
+    'title', 'updated', 'published'))
 
 PHOTO_FIELDS = ','.join((
     'gphoto:id', 'gphoto:timestamp', 'title', 'gphoto:albumid', 'summary',
@@ -69,7 +69,8 @@ def raw2album(raw):
     """
     res = {
         'id': g_get_value(raw, 'id', 'gphoto'),
-        'title': g_get_value(raw, 'name', 'gphoto'),
+        'title': g_get_value(raw, 'title'),  # original title, may create doubles
+        'name': g_get_value(raw, 'name', 'gphoto'),  # camel-cased unique name identifier
         'author': g_get_value(raw['author'][0], 'name'),
         'access': g_get_value(raw, 'access', 'gphoto'),
         'summary': g_get_value(raw, 'summary'),
@@ -124,9 +125,9 @@ class PicasaClient(object):
             raise ValueError('unexpected authentication error: invalid answer.')
         self.token = match.group(1)
 
-    def _url(self, suffix=''):
-        return 'https://picasaweb.google.com/data/feed/api/user/%s/%s' % (
-            self.login, suffix)
+    def _url(self, suffix='', selector='feed'):
+        return 'https://picasaweb.google.com/data/{selector}/api/user/{user}/{suffix}'.format(
+            selector=selector, user=self.login, suffix=suffix)
 
     def _headers(self):
         return {
@@ -186,6 +187,8 @@ class PicasaClient(object):
         return self._paginated_fetch(url, params, raw2photo, page_size)
 
     def create_album(self, title, access=ACCESS_PRIVATE, summary='', location=''):
+        """Creates an album on Google+ Photos.
+        """
         ts = dt2ts(datetime.utcnow(), True)
         url = self._url()
         # reverse engineered XML from gdata APIs
@@ -212,7 +215,7 @@ class PicasaClient(object):
 
         # retrieve newly created album ID
         xml_tree = ElementTree.fromstring(res.text)
-        id_node = xml_tree.find('{http://schemas.google.com/photos/2007}id')  # gphoto namespace
+        id_node = xml_tree.find('{http://schemas.google.com/photos/2007}id')  # gphoto namespace:id
 
         # get album in JSON now
         url = self._url('albumid/%s' % id_node.text)
@@ -221,3 +224,13 @@ class PicasaClient(object):
         if res.status_code != 200:
             raise ValueError("could not fetch newly created album: '%s'" % title)
         return raw2album(res.json()['feed'])
+
+    def delete_album(self, id):
+        url = self._url('albumid/%s' % id, selector='entry')
+        headers = self._headers()
+        headers.update({
+            'If-Match': '*',  # delete the album regardless of version
+        })
+        res = requests.delete(url, headers=headers)
+        if res.status_code != 200:
+            raise ValueError("could not delete album id: '%s'" % id)

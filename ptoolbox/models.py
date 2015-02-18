@@ -12,8 +12,9 @@ class GoogleAlbum(object):
     """Contains methods and accessors to Google Album objects.
     """
 
-    def __init__(self, id, title, author, access, summary, updated, published):
+    def __init__(self, id, name, title, author, access, summary, updated, published):
         self.id = id
+        self.name = name
         self.title = title
         self.author = author
         self.access = access

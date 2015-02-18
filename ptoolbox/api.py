@@ -17,6 +17,13 @@ from .conf import settings
 from .utils import iso8601str2datetime
 from .models import GoogleAlbum, GooglePhoto, ACCESS_PRIVATE
 
+ALBUM_FIELDS = ','.join((
+    'gphoto:id', 'gphoto:name', 'author', 'gphoto:access', 'summary',
+    'updated', 'published'))
+
+PHOTO_FIELDS = ','.join((
+    'gphoto:id', 'gphoto:timestamp', 'title', 'gphoto:albumid', 'summary',
+    'gphoto:width', 'gphoto:height'))
 
 epoch = datetime.utcfromtimestamp(0)
 
@@ -158,14 +165,24 @@ class PicasaClient(object):
             for item in self._paginated_fetch(url, params, callback, page_size, index + page_size):
                 yield item
 
-    def fetch_albums(self, page_size=None):
+    def fetch_albums(self, page_size=None, **extra_params):
         url = self._url()  # albums are requested via 'kind' param on base URL
-        params = {'kind': 'album'}
+        params = {
+            'kind': 'album',
+            'fields': 'entry({album_fields}),openSearch:totalResults'.format(album_fields=ALBUM_FIELDS),
+        }
+        if extra_params:
+            params.update(extra_params)
         return self._paginated_fetch(url, params, raw2album, page_size)
 
-    def fetch_images(self, album_id, page_size=None):
+    def fetch_images(self, album_id, page_size=None, **extra_params):
         url = self._url('albumid/%s' % album_id)
-        params = {'kind': 'photo'}
+        params = {
+            'kind': 'photo',
+            'fields': 'entry({photo_fields}),openSearch:totalResults'.format(photo_fields=PHOTO_FIELDS),
+        }
+        if extra_params:
+            params.update(extra_params)
         return self._paginated_fetch(url, params, raw2photo, page_size)
 
     def create_album(self, title, access=ACCESS_PRIVATE, summary='', location=''):

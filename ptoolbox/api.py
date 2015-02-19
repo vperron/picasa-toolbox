@@ -4,6 +4,7 @@
 cf. https://developers.google.com/picasa-web/docs/2.0/reference
 """
 
+import os
 import re
 import json
 import requests
@@ -24,6 +25,7 @@ ALBUM_FIELDS = ','.join((
 PHOTO_FIELDS = ','.join((
     'gphoto:id', 'gphoto:timestamp', 'title', 'gphoto:albumid', 'summary',
     'gphoto:width', 'gphoto:height'))
+
 
 epoch = datetime.utcfromtimestamp(0)
 
@@ -225,12 +227,25 @@ class PicasaClient(object):
             raise ValueError("could not fetch newly created album: '%s'" % title)
         return raw2album(res.json()['feed'])
 
-    def delete_album(self, id):
-        url = self._url('albumid/%s' % id, selector='entry')
+    def delete_album(self, album_id):
+        url = self._url('albumid/%s' % album_id, selector='entry')
         headers = self._headers()
         headers.update({
             'If-Match': '*',  # delete the album regardless of version
         })
         res = requests.delete(url, headers=headers)
         if res.status_code != 200:
-            raise ValueError("could not delete album id: '%s'" % id)
+            raise ValueError("could not delete album id: '%s'" % album_id)
+
+    def upload_image(self, path, title, album_id='default', summary=''):
+        url = self._url('albumid/%s' % album_id)
+        headers = self._headers()
+        headers.update({
+            'Slug': title,
+            'Content-Type': 'image/jpeg',
+            'Content-Length': os.path.getsize(path),
+        })
+        with open(path, 'rb') as f:
+            res = requests.post(url, headers=headers, data=f)
+        if res != 201:
+            raise ValueError("upload of picture: %s [title='%s'] failed." % path, title)

@@ -77,7 +77,8 @@ def listalbums(email, password):
     p = PicasaClient()
     p.authenticate(email, password)
     for album in p.fetch_albums():
-        print "%s - '%s' [%s] (%s)" % (album.published.isoformat(), album.title, album.name, album.author)
+        print "%s - '%s' [%s-%s] (%s)" % (
+            album.published.isoformat(), album.id, album.title, album.name, album.author)
 
 
 @cli.command('delete_album')
@@ -104,6 +105,7 @@ def deletealbum(email, password, force, title):
 def uploadfolder(email, password, default_album, path):
     p = PicasaClient()
     p.authenticate(email, password)
+
     if default_album:
         settings.DEFAULT_ALBUM = default_album
     upload_folder(p, path)

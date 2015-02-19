@@ -83,7 +83,8 @@ def upload_folder(client, path, warn=True, resize=True, force_push=False, remote
             album = albums[title]
         else:
             log.debug("creating album '%s'" % title)
-            album = client.create_album(title)
+            album_id = client.create_album(title)
+            album = client.get_album(album_id)
 
         # fetch list of album images if necessary
         if album.id not in remote_images:

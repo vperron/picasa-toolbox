@@ -105,7 +105,6 @@ def deletealbum(email, password, force, title):
 def uploadfolder(email, password, default_album, path):
     p = PicasaClient()
     p.authenticate(email, password)
-
     if default_album:
         settings.DEFAULT_ALBUM = default_album
     upload_folder(p, path)

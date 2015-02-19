@@ -18,6 +18,20 @@ from .conf import settings
 from .utils import iso8601str2datetime
 from .models import GoogleAlbum, GooglePhoto, ACCESS_PRIVATE
 
+epoch = datetime.utcfromtimestamp(0)
+
+G_XML_ROOT = 'root'  # any identifier really; as long as it's not hardcoded
+
+G_XML_NAMESPACES = {
+    G_XML_ROOT: 'http://www.w3.org/2005/Atom',
+    'gd': 'http://schemas.google.com/g/2005',
+    'app': 'http://www.w3.org/2007/app',
+    'gdata': 'http://www.w3.org/2005/Atom',
+    'gphoto': 'http://schemas.google.com/photos/2007',
+    'media': 'http://search.yahoo.com/mrss/',
+}
+
+
 ALBUM_FIELDS = ','.join((
     'gphoto:id', 'gphoto:name', 'author', 'gphoto:access', 'summary',
     'title', 'updated', 'published'))
@@ -25,9 +39,6 @@ ALBUM_FIELDS = ','.join((
 PHOTO_FIELDS = ','.join((
     'gphoto:id', 'gphoto:timestamp', 'title', 'gphoto:albumid', 'summary',
     'gphoto:width', 'gphoto:height'))
-
-
-epoch = datetime.utcfromtimestamp(0)
 
 
 def ts2dt(ts, millisecs=False):
@@ -46,38 +57,41 @@ def dt2ts(dt, millisecs=False):
     return int(ts)
 
 
-def g_key(key, namespace=None):
+def g_json_key(key, namespace=None):
     return key if namespace is None else '%s$%s' % (namespace, key)
 
 
-def g_value(value, accessor='$t'):
-    return {accessor: value}
-
-
-def g_get_value(data, key, namespace=None, accessor='$t'):
+def g_json_value(data, key, namespace=None, accessor='$t'):
     """Returns a google-encoded value from the feed. Example:
     json = {"gphoto$access": { "$t": "private" }}, then
-    g_get_value(json, 'access', 'gphoto') is 'private'
+    g_json_value(json, 'access', 'gphoto') is 'private'
     """
-    complete_key = g_key(key, namespace)
+    complete_key = g_json_key(key, namespace)
     if complete_key in data:
         if accessor in data[complete_key]:
             return data[complete_key][accessor]
     return None
 
 
+def g_xml_value(data, key, namespace=G_XML_ROOT):
+    xml_tree = ElementTree.fromstring(data)
+    full_key = "{%s}%s" % (G_XML_NAMESPACES[namespace], key)
+    id_node = xml_tree.find(full_key)
+    return id_node.text
+
+
 def raw2album(raw):
     """Returns a GoogleAlbum object from the raw JSON data.
     """
     res = {
-        'id': g_get_value(raw, 'id', 'gphoto'),
-        'title': g_get_value(raw, 'title'),  # original title, may create doubles
-        'name': g_get_value(raw, 'name', 'gphoto'),  # camel-cased unique name identifier
-        'author': g_get_value(raw['author'][0], 'name'),
-        'access': g_get_value(raw, 'access', 'gphoto'),
-        'summary': g_get_value(raw, 'summary'),
-        'updated': iso8601str2datetime(g_get_value(raw, 'updated')),
-        'published': iso8601str2datetime(g_get_value(raw, 'published')),
+        'id': g_json_value(raw, 'id', 'gphoto'),
+        'title': g_json_value(raw, 'title'),  # original title, may create doubles
+        'name': g_json_value(raw, 'name', 'gphoto'),  # camel-cased unique name identifier
+        'author': g_json_value(raw['author'][0], 'name'),
+        'access': g_json_value(raw, 'access', 'gphoto'),
+        'summary': g_json_value(raw, 'summary'),
+        'updated': iso8601str2datetime(g_json_value(raw, 'updated')),
+        'published': iso8601str2datetime(g_json_value(raw, 'published')),
     }
     return GoogleAlbum(**res)
 
@@ -86,13 +100,13 @@ def raw2photo(raw):
     """Returns a GoogleAlbum object from the raw JSON data.
     """
     res = {
-        'id': g_get_value(raw, 'id', 'gphoto'),
-        'time': ts2dt(int(g_get_value(raw, 'timestamp', 'gphoto')), millisecs=True),
-        'title': g_get_value(raw, 'title'),
-        'width': int(g_get_value(raw, 'width', 'gphoto')),
-        'height': int(g_get_value(raw, 'height', 'gphoto')),
-        'summary': g_get_value(raw, 'summary'),
-        'album_id': g_get_value(raw, 'albumid', 'gphoto'),
+        'id': g_json_value(raw, 'id', 'gphoto'),
+        'time': ts2dt(int(g_json_value(raw, 'timestamp', 'gphoto')), millisecs=True),
+        'title': g_json_value(raw, 'title'),
+        'width': int(g_json_value(raw, 'width', 'gphoto')),
+        'height': int(g_json_value(raw, 'height', 'gphoto')),
+        'summary': g_json_value(raw, 'summary'),
+        'album_id': g_json_value(raw, 'albumid', 'gphoto'),
     }
     return GooglePhoto(**res)
 
@@ -162,7 +176,7 @@ class PicasaClient(object):
         for item in data['entry']:
             yield callback(item)
         # keep going until all data is consumed
-        total_results = g_get_value(data, 'totalResults', 'openSearch')
+        total_results = g_json_value(data, 'totalResults', 'openSearch')
         remaining_results = total_results - (index + page_size - 1)
         if remaining_results > 0:
             for item in self._paginated_fetch(url, params, callback, page_size, index + page_size):
@@ -214,17 +228,14 @@ class PicasaClient(object):
         res = requests.post(url, data=data, headers=self._headers())
         if res.status_code != 201:
             raise ValueError("could not post new album: '%s'" % title)
+        return g_xml_value(res.text, 'id', 'gphoto')
 
-        # retrieve newly created album ID
-        xml_tree = ElementTree.fromstring(res.text)
-        id_node = xml_tree.find('{http://schemas.google.com/photos/2007}id')  # gphoto namespace:id
-
-        # get album in JSON now
-        url = self._url('albumid/%s' % id_node.text)
+    def get_album(self, id):
+        url = self._url('albumid/%s' % id)
         params = {'alt': self.data_type}
         res = requests.get(url, params=params, headers=self._headers())
         if res.status_code != 200:
-            raise ValueError("could not fetch newly created album: '%s'" % title)
+            raise ValueError("could not fetch album id: '%s'" % id)
         return raw2album(res.json()['feed'])
 
     def delete_album(self, album_id):
@@ -249,3 +260,4 @@ class PicasaClient(object):
             res = requests.post(url, headers=headers, data=f)
         if res != 201:
             raise ValueError("upload of picture: %s [title='%s'] failed." % path, title)
+        return g_xml_value(res.text, 'id', 'gphoto')

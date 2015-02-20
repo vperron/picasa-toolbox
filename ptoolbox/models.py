@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from .utils import directory2album
 from .path import get_filename, get_dirname
-from .tags import parse_time, parse_width, parse_height
+from .utils import directory2album, parse_exif_time
 
 
 ACCESS_PRIVATE = 'private'
@@ -39,24 +38,17 @@ class GooglePhoto(object):
 
 class ImageInfo(object):
     """Contains path to an image, along with a normalized name,
-    directory, album title, and several tags.
+    directory, album title...
     """
 
-    def __init__(self, path, checksum, tags=None, rel_path=None):
+    def __init__(self, path, width, height, checksum, time=None, rel_path=None):
         self.path = path
+        self.time = time
         self.checksum = checksum
         self.name = get_filename(path)
         self.directory = get_dirname(path)
         self.album_title = directory2album(get_dirname(rel_path if rel_path else path))
-        self.is_valid = False
-        if tags:
-            try:
-                self.time = parse_time(tags)
-                self.width = parse_width(tags)
-                self.height = parse_height(tags)
-                self.is_valid = True
-            except (KeyError, ValueError) as e:
-                pass  # if one tag is faulty, just pass for now.
+        self.width, self.height = width, height
 
     def __repr__(self):
         return self.path

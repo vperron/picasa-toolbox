@@ -43,6 +43,7 @@ def analyze(path):
 
     for img in list_valid_images(path, deep=True):
         n_pictures_total += 1
+        print img.name, img.width, img.time
 
         # implements double picture detection
         if img.checksum in pictures:
@@ -54,7 +55,7 @@ def analyze(path):
             n_pictures_orphan += 1
 
         # eventually add picture to album
-        if img.is_valid and img.album_title:
+        if img.time and img.album_title:
             albums[img.album_title].append(img)
             n_pictures_good += 1
 

@@ -21,23 +21,25 @@ import os
 
 from .conf import settings
 from .models import ImageInfo
-from .path import get_tags, is_jpeg, md5sum
-from .utils import fastwalk
+from .utils import fastwalk, parse_exif_time
+from .path import get_tags, jpeg_size, is_jpeg, md5sum
 
 
 def list_valid_images(path, deep=True):
     """Walks down a path, yields ImageInfo objects for every 'valid' image.
     A 'valid' image is any file that is JPEG, has minimum info (width, height)
+    Time is optional and may be None.
     """
     for e in fastwalk(path, deep):
         if not is_jpeg(e.path):
             continue
-        try:
-            rel_path = os.path.relpath(e.path, path)
-            img = ImageInfo(e.path, md5sum(e.path), get_tags(e.path), rel_path=rel_path)
-            yield img
-        except KeyError, ValueError:  # we keep
-            continue
+        rel_path = os.path.relpath(e.path, path)
+        md5 = md5sum(e.path)
+        tags = get_tags(e.path)
+        time = parse_exif_time(tags)
+        width, height = jpeg_size(e.path)
+        img = ImageInfo(e.path, width, height, md5, time, rel_path=rel_path)
+        yield img
 
 
 def upload_image(client, imginfo, album_id, warn=True, resize=True, force_push=False, remote_images=None):

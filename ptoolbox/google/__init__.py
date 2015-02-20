@@ -1,114 +1,18 @@
 # -*- coding: utf-8 -*-
 
-"""Implements methods to interact with the Picasa Wweb Albums API 2.0,
-cf. https://developers.google.com/picasa-web/docs/2.0/reference
-"""
-
 import os
 import re
 import json
 import requests
 
-from datetime import datetime, timedelta
-from xml.etree import ElementTree
+from datetime import datetime
 
 from ptoolbox import log
+from ptoolbox.conf import settings
 
-from .conf import settings
-from .utils import iso8601str2datetime
-from .models import GoogleAlbum, GooglePhoto, ACCESS_PRIVATE
-
-epoch = datetime.utcfromtimestamp(0)
-
-G_XML_ROOT = 'root'  # any identifier really; as long as it's not hardcoded
-
-G_XML_NAMESPACES = {
-    G_XML_ROOT: 'http://www.w3.org/2005/Atom',
-    'gd': 'http://schemas.google.com/g/2005',
-    'app': 'http://www.w3.org/2007/app',
-    'gdata': 'http://www.w3.org/2005/Atom',
-    'gphoto': 'http://schemas.google.com/photos/2007',
-    'media': 'http://search.yahoo.com/mrss/',
-}
-
-
-ALBUM_FIELDS = ','.join((
-    'gphoto:id', 'gphoto:name', 'author', 'gphoto:access', 'summary',
-    'title', 'updated', 'published'))
-
-PHOTO_FIELDS = ','.join((
-    'gphoto:id', 'gphoto:timestamp', 'title', 'gphoto:albumid', 'summary',
-    'gphoto:width', 'gphoto:height'))
-
-
-def ts2dt(ts, millisecs=False):
-    """Convert a timestamp to a datetime."""
-    if millisecs:
-        dt = datetime.utcfromtimestamp(ts / 1000)
-        return dt + timedelta(milliseconds=ts % 1000)
-    return datetime.utcfromtimestamp(ts)
-
-
-def dt2ts(dt, millisecs=False):
-    """Convert a datetime to a timestamp in UTC."""
-    ts = (dt - epoch).total_seconds()
-    if millisecs:
-        return int(ts * 1000)
-    return int(ts)
-
-
-def g_json_key(key, namespace=None):
-    return key if namespace is None else '%s$%s' % (namespace, key)
-
-
-def g_json_value(data, key, namespace=None, accessor='$t'):
-    """Returns a google-encoded value from the feed. Example:
-    json = {"gphoto$access": { "$t": "private" }}, then
-    g_json_value(json, 'access', 'gphoto') is 'private'
-    """
-    complete_key = g_json_key(key, namespace)
-    if complete_key in data:
-        if accessor in data[complete_key]:
-            return data[complete_key][accessor]
-    return None
-
-
-def g_xml_value(data, key, namespace=G_XML_ROOT):
-    xml_tree = ElementTree.fromstring(data)
-    full_key = "{%s}%s" % (G_XML_NAMESPACES[namespace], key)
-    id_node = xml_tree.find(full_key)
-    return id_node.text
-
-
-def raw2album(raw):
-    """Returns a GoogleAlbum object from the raw JSON data.
-    """
-    res = {
-        'id': g_json_value(raw, 'id', 'gphoto'),
-        'title': g_json_value(raw, 'title'),  # original title, may create doubles
-        'name': g_json_value(raw, 'name', 'gphoto'),  # camel-cased unique name identifier
-        'author': g_json_value(raw['author'][0], 'name'),
-        'access': g_json_value(raw, 'access', 'gphoto'),
-        'summary': g_json_value(raw, 'summary'),
-        'updated': iso8601str2datetime(g_json_value(raw, 'updated')),
-        'published': iso8601str2datetime(g_json_value(raw, 'published')),
-    }
-    return GoogleAlbum(**res)
-
-
-def raw2photo(raw):
-    """Returns a GoogleAlbum object from the raw JSON data.
-    """
-    res = {
-        'id': g_json_value(raw, 'id', 'gphoto'),
-        'time': ts2dt(int(g_json_value(raw, 'timestamp', 'gphoto')), millisecs=True),
-        'title': g_json_value(raw, 'title'),
-        'width': int(g_json_value(raw, 'width', 'gphoto')),
-        'height': int(g_json_value(raw, 'height', 'gphoto')),
-        'summary': g_json_value(raw, 'summary'),
-        'album_id': g_json_value(raw, 'albumid', 'gphoto'),
-    }
-    return GooglePhoto(**res)
+from .utils import dt2ts, g_xml_value, g_json_value
+from .models import GoogleAlbum, GooglePhoto
+from .constants import ACCESS_PRIVATE, ALBUM_FIELDS, PHOTO_FIELDS
 
 
 class PicasaClient(object):
@@ -190,7 +94,7 @@ class PicasaClient(object):
         }
         if extra_params:
             params.update(extra_params)
-        return self._paginated_fetch(url, params, raw2album, page_size)
+        return self._paginated_fetch(url, params, GoogleAlbum.from_raw_json, page_size)
 
     def fetch_images(self, album_id, page_size=None, **extra_params):
         url = self._url('albumid/%s' % album_id)
@@ -200,7 +104,7 @@ class PicasaClient(object):
         }
         if extra_params:
             params.update(extra_params)
-        return self._paginated_fetch(url, params, raw2photo, page_size)
+        return self._paginated_fetch(url, params, GooglePhoto.from_raw_json, page_size)
 
     def create_album(self, title, access=ACCESS_PRIVATE, summary='', location=''):
         """Creates an album on Google+ Photos.
@@ -236,7 +140,7 @@ class PicasaClient(object):
         res = requests.get(url, params=params, headers=self._headers())
         if res.status_code != 200:
             raise ValueError("could not fetch album id: '%s'" % id)
-        return raw2album(res.json()['feed'])
+        return GoogleAlbum.from_raw_json(res.json()['feed'])
 
     def delete_album(self, album_id):
         url = self._url('albumid/%s' % album_id, selector='entry')

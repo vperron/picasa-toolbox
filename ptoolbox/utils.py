@@ -8,12 +8,6 @@ from .path import fastwalk
 TAG_DATETIME = 'Image DateTime'  # actually is DateTimeOriginal it seems.
 
 
-def iso8601str2datetime(s):
-    if s:
-        return datetime.strptime(s, '%Y-%m-%dT%H:%M:%S.%fZ')
-    return None
-
-
 def count_files(path):
     num_files = 0
     for x in fastwalk(path, deep=True):

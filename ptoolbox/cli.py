@@ -11,9 +11,9 @@ from collections import defaultdict
 
 from ptoolbox import log, list_valid_images, upload_folder
 
-from .api import PicasaClient
 from .conf import settings
 from .utils import count_files
+from .google import PicasaClient
 
 
 @click.group()

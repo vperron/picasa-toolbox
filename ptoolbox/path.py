@@ -58,17 +58,27 @@ def md5sum(filename, blocksize=65536):
     return h.hexdigest()
 
 
+def is_jpeg_header(header_type):
+    return header_type & 0xff00 == 0xff00
+
+
+def is_sof0_header(header_type):
+    return header_type in (0xffc0, 0xffc1, 0xffc2, 0xffc3)
+
+
 def jpeg_size(path):
     """Get image size.
     Structure of JPEG file is:
         ffd8 [ffXX SSSS DD DD ...] [ffYY SSSS DDDD ...]  (S is 16bit size, D the data)
-    We look for the SOF0 header 0xffc0; its structure is
-       [ffc0 SSSS PPHH HHWW ...] where PP is 8bit precision, HHHH 16bit height, WWWW width
+    We look for the SOFx header 0xffcx; its structure is
+       [ffcx SSSS PPHH HHWW ...] where PP is 8bit precision, HHHH 16bit height, WWWW width
     """
     with open(path, 'rb') as f:
         _, header_type, size = struct.unpack('>HHH', f.read(6))
-        while header_type != 0xffc0:
+        while is_jpeg_header(header_type) and not is_sof0_header(header_type):
             f.seek(size - 2, 1)
             header_type, size = struct.unpack('>HH', f.read(4))
-        bpi, height, width = struct.unpack('>BHH', f.read(5))
-    return width, height
+        if is_sof0_header(header_type):
+            bpi, height, width = struct.unpack('>BHH', f.read(5))
+            return width, height
+    raise ValueError('the file does not bear a valid SOF0 header')

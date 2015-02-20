@@ -37,7 +37,10 @@ def list_valid_images(path, deep=True):
         md5 = md5sum(e.path)
         tags = get_tags(e.path)
         time = parse_exif_time(tags)
-        width, height = jpeg_size(e.path)
+        try:
+            width, height = jpeg_size(e.path)
+        except ValueError, e:
+            continue
         img = ImageInfo(e.path, width, height, md5, time, rel_path=rel_path)
         yield img
 

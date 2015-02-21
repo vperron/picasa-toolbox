@@ -4,6 +4,7 @@
 have side effects and are heavily procedural here: it's OK.
 """
 
+import os
 import click
 import logging
 
@@ -59,16 +60,38 @@ def analyze(path):
             albums[img.album_title].append(img)
             n_pictures_good += 1
 
-    log.info('> processed\n\t%d total images\n\t%d valid images\n\t%d orphan images\n\t%d duplicates' % (
-        n_pictures_total, n_pictures_good, n_pictures_orphan, len(duplicates_hashes)))
-    log.info('---- albums')
+    print '> processed\n\t%d total images\n\t%d valid images\n\t%d orphan images\n\t%d duplicates' % (
+        n_pictures_total, n_pictures_good, n_pictures_orphan, len(duplicates_hashes))
+    print '---- albums'
     for k, v in albums.iteritems():
-        log.info('%s: %d images' % (k, len(v)))
-    log.info('---- double images')
+        print '%s: %d images' % (k, len(v))
+    print '---- double images'
     for h in duplicates_hashes:
-        log.info("hash: '%s'" % h)
+        print "hash: '%s'" % h
         for img in pictures[h]:
-            log.info('\t%s' % img.path)
+            print '\t%s' % img.path
+
+
+@cli.command(help="Flattens valid images from SOURCE to DEST, renaming them opionatedly.")
+@click.argument('src_path')
+@click.argument('dst_path')  # eventually add --invalid=, --duplicates= ...
+def flatten_local(src_path, dst_path):
+
+    # TODO: add file listing in the beginning, how many files to process,
+    # possible conflicts, etc.
+
+    for img in list_valid_images(src_path, deep=True):
+        if img.time is None:
+            continue
+
+        time_str = img.time.strftime('%Y-%m-%dT%H%M%S')
+        hash_str = img.checksum[0:4]
+        dst_name = '{time}-{hash}.jpg'.format(time=time_str, hash=hash_str)
+        dst_full = os.path.join(dst_path, dst_name)
+        if os.path.isfile(dst_full):
+            # TODO: implement this case (ask the user ? compare the files ? erase ?
+            continue
+        os.rename(img.path, dst_full)
 
 
 @cli.command('list_albums')

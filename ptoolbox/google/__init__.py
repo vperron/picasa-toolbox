@@ -61,6 +61,7 @@ class PicasaClient(object):
             'alt': self.data_type,
             'max-results': page_size,
             'start-index': index,
+            'imgmax': 'd',  # defines the 'downloadable' size for every image
         }
 
     def _paginated_fetch(self, url, params, callback, page_size=None, index=1, total=None):

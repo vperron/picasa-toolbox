@@ -22,5 +22,5 @@ ALBUM_FIELDS = ','.join((
     'title', 'updated', 'published', 'gphoto:numphotos'))
 
 PHOTO_FIELDS = ','.join((
-    'gphoto:id', 'gphoto:timestamp', 'title', 'gphoto:albumid', 'summary',
-    'gphoto:width', 'gphoto:height', 'exif:tags'))
+    'gphoto:id', 'gphoto:timestamp', 'title', 'gphoto:albumid',
+    'gphoto:width', 'gphoto:height', 'gphoto:size', 'media:group', 'exif:tags'))

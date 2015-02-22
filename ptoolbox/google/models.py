@@ -38,14 +38,14 @@ class GooglePhoto(object):
     """Contains methods and accessors to Google Photo objects.
     """
 
-    def __init__(self, id, time, title, album_id, summary, width, height):
+    def __init__(self, id, time, title, album_id, width, height, size):
         self.id = id
         self.time = time
         self.title = title
         self.width = width
         self.height = height
-        self.summary = summary
         self.album_id = album_id
+        self.size = size
 
     @classmethod
     def from_raw_json(cls, raw):
@@ -55,7 +55,7 @@ class GooglePhoto(object):
             'title': g_json_value(raw, 'title'),
             'width': int(g_json_value(raw, 'width', 'gphoto')),
             'height': int(g_json_value(raw, 'height', 'gphoto')),
-            'summary': g_json_value(raw, 'summary'),
             'album_id': g_json_value(raw, 'albumid', 'gphoto'),
+            'size': int(g_json_value(raw, 'size', 'gphoto')),
         }
         return cls(**res)

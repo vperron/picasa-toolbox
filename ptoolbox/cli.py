@@ -10,10 +10,10 @@ import logging
 
 from collections import defaultdict
 
-from ptoolbox import log, list_valid_images, upload_folder
+from ptoolbox import log
 
 from .conf import settings
-from .utils import count_files
+from .utils import count_files, list_valid_images
 from .google import PicasaClient
 
 
@@ -105,6 +105,18 @@ def listalbums(email, password):
             album.published.isoformat(), album.id, album.title, album.name, album.author)
 
 
+@cli.command('list_images')
+@click.option('--email', prompt='Your email')
+@click.option('--password', prompt=True, hide_input=True)
+@click.argument('album_id', default='default')
+def listimages(email, password, album_id):
+    p = PicasaClient()
+    p.authenticate(email, password)
+    for img in p.fetch_images(album_id):
+        print "%s / %s - '%s' [%sx%s]" % (
+            img.time.isoformat(), img.id, img.title, img.width, img.height)
+
+
 @cli.command('delete_album')
 @click.option('--email', prompt='Your email')
 @click.option('--password', prompt=True, hide_input=True)
@@ -127,8 +139,56 @@ def deletealbum(email, password, force, title):
               help='As a default, images without an album aren\'t uploaded. This sets a default one.')
 @click.argument('path')
 def uploadfolder(email, password, default_album, path):
-    p = PicasaClient()
-    p.authenticate(email, password)
+    client = PicasaClient()
+    client.authenticate(email, password)
     if default_album:
         settings.DEFAULT_ALBUM = default_album
-    upload_folder(p, path)
+
+    log.debug('fetching remote albums...')
+    remote_albums = [album for album in client.fetch_albums()]
+
+    # index albums by title
+    albums = {album.title: album for album in remote_albums}
+
+    # index image collections by album id
+    remote_images = {}
+
+    for img in list_valid_images(path):
+
+        # get or create album from its title (directory name)
+        title = img.album_title if img.album_title else settings.DEFAULT_ALBUM
+        if title and title in albums.keys():
+            album = albums[title]
+        else:
+            log.debug("creating album '%s'" % title)
+            album_id = client.create_album(title)
+            album = client.get_album(album_id)
+
+        # fetch list of album images if necessary
+        if album.id not in remote_images:
+            log.debug("getting list of images for album '%s'" % album.title)
+            remote_images[album.id] = [rimg for rimg in client.fetch_images(album.id)]
+            for x in remote_images[album.id]:
+                log.debug("\tremote %s - '%s' [%dx%d]" % (
+                    x.time.isoformat(), x.title, x.width, x.height))
+
+        # upload image
+        log.debug("uploading image '%s' from album '%s' [%s]" % (img.name, album.title, album.id))
+        # upload_image(client, img, album.id, warn, resize, force_push, remote_images[album.id])
+
+        if remote_images is None:
+            remote_images = [rimg for rimg in client.fetch_images(album_id)]
+
+        # if the image does _not_ have a date, ask to continue
+
+        # download all the available images as quickly as possible from the server
+        # unless remote is not None but [{album0}, ...]
+
+        # store it internally as a double dictionary: name -> date taken
+
+        # if there's a match, tell that image already exists. force ?
+
+        # if there's a partial match (name or date taken exists), display info
+        # about candidate. ask for which one to force.
+
+        # if the image has no album, warn.

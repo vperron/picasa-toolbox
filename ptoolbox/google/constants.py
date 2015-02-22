@@ -23,4 +23,4 @@ ALBUM_FIELDS = ','.join((
 
 PHOTO_FIELDS = ','.join((
     'gphoto:id', 'gphoto:timestamp', 'title', 'gphoto:albumid', 'summary',
-    'gphoto:width', 'gphoto:height'))
+    'gphoto:width', 'gphoto:height', 'exif:tags'))

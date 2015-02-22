@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from .path import get_filename, get_dirname
-from .utils import directory2album, parse_exif_time
+
+
+def directory2album(name):
+    return None if name == '.' else name
 
 
 class ImageInfo(object):

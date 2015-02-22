@@ -63,7 +63,7 @@ class PicasaClient(object):
             'start-index': index,
         }
 
-    def _paginated_fetch(self, url, params, callback, page_size=None, index=1):
+    def _paginated_fetch(self, url, params, callback, page_size=None, index=1, total=None):
         """Returns an iterator to a paginated resource.
         """
         if page_size is None:
@@ -80,10 +80,10 @@ class PicasaClient(object):
         for item in data['entry']:
             yield callback(item)
         # keep going until all data is consumed
-        total_results = g_json_value(data, 'totalResults', 'openSearch')
+        total_results = total if total else g_json_value(data, 'totalResults', 'openSearch')
         remaining_results = total_results - (index + page_size - 1)
         if remaining_results > 0:
-            for item in self._paginated_fetch(url, params, callback, page_size, index + page_size):
+            for item in self._paginated_fetch(url, params, callback, page_size, index + page_size, total):
                 yield item
 
     def fetch_albums(self, page_size=None, **extra_params):
@@ -97,6 +97,7 @@ class PicasaClient(object):
         return self._paginated_fetch(url, params, GoogleAlbum.from_raw_json, page_size)
 
     def fetch_images(self, album_id, page_size=None, **extra_params):
+        album = self.get_album(album_id)
         url = self._url('albumid/%s' % album_id)
         params = {
             'kind': 'photo',
@@ -104,7 +105,8 @@ class PicasaClient(object):
         }
         if extra_params:
             params.update(extra_params)
-        return self._paginated_fetch(url, params, GooglePhoto.from_raw_json, page_size)
+        return self._paginated_fetch(url, params, GooglePhoto.from_raw_json, page_size,
+                                     total=album.num_photos)
 
     def create_album(self, title, access=ACCESS_PRIVATE, summary='', location=''):
         """Creates an album on Google+ Photos.

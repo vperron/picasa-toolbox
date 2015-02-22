@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .utils import g_json_value, iso8601str2datetime, ts2dt
+from .utils import g_json_key, g_json_value, iso8601str2datetime, ts2dt
 
 
 class GoogleAlbum(object):
@@ -38,24 +38,28 @@ class GooglePhoto(object):
     """Contains methods and accessors to Google Photo objects.
     """
 
-    def __init__(self, id, time, title, album_id, width, height, size):
+    def __init__(self, id, url, size, time, title, album_id, width, height):
         self.id = id
+        self.url = url
+        self.size = size
         self.time = time
         self.title = title
         self.width = width
         self.height = height
         self.album_id = album_id
-        self.size = size
 
     @classmethod
     def from_raw_json(cls, raw):
+        media_group = raw[g_json_key('group', 'media')]
+        media_content = media_group[g_json_key('content', 'media')][0]
         res = {
             'id': g_json_value(raw, 'id', 'gphoto'),
+            'url': media_content['url'],
             'time': ts2dt(int(g_json_value(raw, 'timestamp', 'gphoto')), millisecs=True),
+            'size': int(g_json_value(raw, 'size', 'gphoto')),
             'title': g_json_value(raw, 'title'),
             'width': int(g_json_value(raw, 'width', 'gphoto')),
             'height': int(g_json_value(raw, 'height', 'gphoto')),
             'album_id': g_json_value(raw, 'albumid', 'gphoto'),
-            'size': int(g_json_value(raw, 'size', 'gphoto')),
         }
         return cls(**res)

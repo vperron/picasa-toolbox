@@ -117,6 +117,18 @@ def listimages(email, password, album_id):
             img.time.isoformat(), img.id, img.title, img.width, img.height)
 
 
+@cli.command('get_image')
+@click.option('--email', prompt='Your email')
+@click.option('--password', prompt=True, hide_input=True)
+@click.argument('album_id', default='default')
+@click.argument('photo_id')
+def listimages(email, password, album_id, photo_id):
+    p = PicasaClient()
+    p.authenticate(email, password)
+    photo = p.get_image(photo_id, album_id)
+    print photo.title, photo.url
+
+
 @cli.command('delete_album')
 @click.option('--email', prompt='Your email')
 @click.option('--password', prompt=True, hide_input=True)

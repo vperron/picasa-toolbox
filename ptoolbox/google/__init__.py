@@ -151,6 +151,20 @@ class PicasaClient(object):
             raise ValueError("could not fetch album id: '%s'" % album_id)
         return GoogleAlbum.from_raw_json(res.json()['feed'])
 
+    def get_image(self, photo_id, album_id='default'):
+        url = self._url('albumid/%s/photoid/%s' % (album_id, photo_id))
+        # XXX: PWA somehow keeps the previous max-results in memory, force it
+        params = self._params(page_size=1, index=1)
+        params.update({
+            # XXX: extra fields are added, the answer in a simple GET differs
+            # from a multiple photo GET
+            'fields': '{photo_fields}'.format(photo_fields=PHOTO_FIELDS),
+        })
+        res = requests.get(url, params=params, headers=self._headers())
+        if res.status_code != 200:
+            raise ValueError("could not fetch photo id: '%s'" % photo_id)
+        return GooglePhoto.from_raw_json(res.json()['feed'])
+
     def delete_album(self, album_id):
         url = self._url('albumid/%s' % album_id, selector='entry')
         headers = self._headers()

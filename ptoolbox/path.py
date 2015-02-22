@@ -9,6 +9,7 @@ import os
 import struct
 import imghdr
 import hashlib
+import requests
 import exifread
 
 from scandir import scandir
@@ -82,3 +83,17 @@ def jpeg_size(path):
             bpi, height, width = struct.unpack('>BHH', f.read(5))
             return width, height
     raise ValueError('the file does not bear a valid SOF0 header')
+
+
+def download_file(url, filename=None):
+    """Downloads a file using its URL; does not accept special headers yet.
+    """
+    if not filename:
+        filename = url.split('/')[-1]
+    r = requests.get(url, stream=True)
+    with open(filename, 'wb') as f:
+        for chunk in r.iter_content(chunk_size=1024):
+            if chunk:  # filter-out keep-alive new chunks
+                f.write(chunk)
+                f.flush()
+    return filename

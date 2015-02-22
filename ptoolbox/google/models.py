@@ -7,7 +7,7 @@ class GoogleAlbum(object):
     """Contains methods and accessors to Google Album objects.
     """
 
-    def __init__(self, id, name, title, author, access, summary, updated, published):
+    def __init__(self, id, name, title, author, access, summary, updated, published, num_photos):
         self.id = id
         self.name = name
         self.title = title
@@ -16,6 +16,7 @@ class GoogleAlbum(object):
         self.summary = summary
         self.updated = updated
         self.published = published
+        self.num_photos = num_photos
 
     @classmethod
     def from_raw_json(cls, raw):
@@ -28,6 +29,7 @@ class GoogleAlbum(object):
             'summary': g_json_value(raw, 'summary'),
             'updated': iso8601str2datetime(g_json_value(raw, 'updated')),
             'published': iso8601str2datetime(g_json_value(raw, 'published')),
+            'num_photos': int(g_json_value(raw, 'numphotos', 'gphoto')),
         }
         return cls(**res)
 

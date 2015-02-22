@@ -19,7 +19,7 @@ G_XML_NAMESPACES = {
 
 ALBUM_FIELDS = ','.join((
     'gphoto:id', 'gphoto:name', 'author', 'gphoto:access', 'summary',
-    'title', 'updated', 'published'))
+    'title', 'updated', 'published', 'gphoto:numphotos'))
 
 PHOTO_FIELDS = ','.join((
     'gphoto:id', 'gphoto:timestamp', 'title', 'gphoto:albumid', 'summary',

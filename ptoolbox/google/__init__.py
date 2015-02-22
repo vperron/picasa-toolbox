@@ -134,12 +134,18 @@ class PicasaClient(object):
             raise ValueError("could not post new album: '%s'" % title)
         return g_xml_value(res.text, 'id', 'gphoto')
 
-    def get_album(self, id):
-        url = self._url('albumid/%s' % id)
-        params = {'alt': self.data_type}
+    def get_album(self, album_id):
+        url = self._url('albumid/%s' % album_id)
+        # XXX: PWA somehow keeps the previous max-results in memory, force it
+        params = self._params(page_size=1, index=1)
+        params.update({
+            # XXX: extra fields are added, the answer in a simple GET differs
+            # from a multiple album GET
+            'fields': 'entry({album_fields}),gphoto:numphotos,author'.format(album_fields=ALBUM_FIELDS),
+        })
         res = requests.get(url, params=params, headers=self._headers())
         if res.status_code != 200:
-            raise ValueError("could not fetch album id: '%s'" % id)
+            raise ValueError("could not fetch album id: '%s'" % album_id)
         return GoogleAlbum.from_raw_json(res.json()['feed'])
 
     def delete_album(self, album_id):

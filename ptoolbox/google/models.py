@@ -1,22 +1,32 @@
 # -*- coding: utf-8 -*-
 
+from peewee import (Model, SqliteDatabase, CharField, IntegerField,
+                    DateTimeField, ForeignKeyField, CompositeKey)
+
 from .utils import g_json_key, g_json_value, iso8601str2datetime, ts2dt
 
+db = SqliteDatabase(None)  # Un-initialized database.
 
-class GoogleAlbum(object):
-    """Contains methods and accessors to Google Album objects.
+
+class BaseModel(Model):
+
+    class Meta:
+        database = db
+
+
+class GoogleAlbum(BaseModel):
+    """Contains methods and accessors to Google Album BaseModels.
     """
 
-    def __init__(self, id, name, title, author, access, summary, updated, published, num_photos):
-        self.id = id
-        self.name = name
-        self.title = title
-        self.author = author
-        self.access = access
-        self.summary = summary
-        self.updated = updated
-        self.published = published
-        self.num_photos = num_photos
+    id = CharField(primary_key=True)
+    name = CharField()
+    title = CharField()
+    author = CharField()
+    access = CharField()
+    summary = CharField()
+    num_photos = IntegerField()
+    updated = DateTimeField()
+    published = DateTimeField()
 
     @classmethod
     def from_raw_json(cls, raw):
@@ -31,35 +41,47 @@ class GoogleAlbum(object):
             'published': iso8601str2datetime(g_json_value(raw, 'published')),
             'num_photos': int(g_json_value(raw, 'numphotos', 'gphoto')),
         }
-        return cls(**res)
+        return GoogleAlbum(**res)
 
 
-class GooglePhoto(object):
-    """Contains methods and accessors to Google Photo objects.
-    """
+class GooglePhoto(BaseModel):
+    """Contains methods and accessors to Google Photo models."""
 
-    def __init__(self, id, url, size, time, title, album_id, width, height):
-        self.id = id
-        self.url = url
-        self.size = size
-        self.time = time
-        self.title = title
-        self.width = width
-        self.height = height
-        self.album_id = album_id
+    album = ForeignKeyField(GoogleAlbum, related_name='photos')
+    uuid = CharField()
+    url = CharField()
+    time = DateTimeField()
+    size = IntegerField()
+    title = CharField()
+    width = IntegerField()
+    height = IntegerField()
+
+    class Meta:
+        primary_key = CompositeKey('album', 'uuid')
 
     @classmethod
     def from_raw_json(cls, raw):
         media_group = raw[g_json_key('group', 'media')]
         media_content = media_group[g_json_key('content', 'media')][0]
         res = {
-            'id': g_json_value(raw, 'id', 'gphoto'),
+            'uuid': g_json_value(raw, 'id', 'gphoto'),
             'url': media_content['url'],
             'time': ts2dt(int(g_json_value(raw, 'timestamp', 'gphoto')), millisecs=True),
             'size': int(g_json_value(raw, 'size', 'gphoto')),
             'title': g_json_value(raw, 'title'),
             'width': int(g_json_value(raw, 'width', 'gphoto')),
             'height': int(g_json_value(raw, 'height', 'gphoto')),
-            'album_id': g_json_value(raw, 'albumid', 'gphoto'),
+            'album': g_json_value(raw, 'albumid', 'gphoto'),
         }
-        return cls(**res)
+        return GooglePhoto(**res)
+
+
+def init_database(name):
+    db.init(name)
+    db.connect()
+    db.drop_tables([GoogleAlbum, GooglePhoto])  # reinit everytime. no support for update yet.
+    db.create_tables([GoogleAlbum, GooglePhoto])
+
+
+def close_database(name):
+    db.close()

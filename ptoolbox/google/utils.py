@@ -22,6 +22,10 @@ def dt2ts(dt, millisecs=False):
     return int(ts)
 
 
+def mail2username(email):
+    return email.split('@')[0]  # remove the e-mail part of the login
+
+
 def iso8601str2datetime(s):
     if s:
         return datetime.strptime(s, '%Y-%m-%dT%H:%M:%S.%fZ')

@@ -5,16 +5,27 @@ Contains all file manipulation primitives.
 
 """
 
-import os
-import struct
-import imghdr
-import hashlib
-import requests
 import exifread
+import hashlib
+import imghdr
+import os
+import os.path
+import requests
+import struct
 
 from scandir import scandir
 
 IMGHDR_JPEG_TYPE = 'jpeg'
+PTOOLBOX_BASE_DIR = '.ptoolbox'
+
+
+home_dir = os.path.expanduser('~')
+ptoolbox_dir = os.path.join(home_dir, PTOOLBOX_BASE_DIR)
+
+
+def ensure_directory(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 
 def is_jpeg(path):

@@ -10,7 +10,7 @@ from datetime import datetime
 from ptoolbox import log
 from ptoolbox.conf import settings
 
-from .utils import dt2ts, g_xml_value, g_json_value
+from .utils import dt2ts, mail2username, g_xml_value, g_json_value
 from .models import GoogleAlbum, GooglePhoto
 from .constants import ACCESS_PRIVATE, ALBUM_FIELDS, PHOTO_FIELDS
 
@@ -32,7 +32,7 @@ class PicasaClient(object):
             self.page_size = settings.PICASA_CLIENT['PAGE_SIZE']
 
     def authenticate(self, login, password):
-        login = login.split('@')[0]  # remove the e-mail part of the login
+        login = mail2username(login)
         self.login = login
         self.password = password
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -75,9 +75,14 @@ class PicasaClient(object):
         # get the page
         log.debug("url = '%s', params = '%s'" % (url, json.dumps(scope_params)))
         res = requests.get(url, params=scope_params, headers=self._headers())
+        # FIXME: can raise an SSLError
         if res.status_code != 200:
             raise ValueError("could not fetch Google resource: '%s'" % url)
         data = res.json()['feed']
+        entry = data.get('entry', None)
+        if entry is None:
+            print data  # FIXME: empty album !!!
+            return
         for item in data['entry']:
             yield callback(item)
         # keep going until all data is consumed

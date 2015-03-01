@@ -4,17 +4,31 @@
 have side effects and are heavily procedural here: it's OK.
 """
 
-import os
+from __future__ import print_function
+
 import click
 import logging
+import os
+import os.path
+import sys
 
 from collections import defaultdict
 
 from ptoolbox import log
 
 from .conf import settings
+from .google import PicasaClient, utils, models
+from .path import ptoolbox_dir, ensure_directory
 from .utils import count_files, list_valid_images
-from .google import PicasaClient
+
+
+def init_user_database(login):
+    """Inits the SQLite database for the given user"""
+    ensure_directory(ptoolbox_dir)
+    db_file_path = os.path.join(ptoolbox_dir, '%s.db' % login)
+    models.init_database(db_file_path)
+
+
 
 
 @click.group()
@@ -23,6 +37,78 @@ def cli(debug):
     settings.DEBUG = debug
     if debug:
         log.setLevel(logging.DEBUG)
+
+
+@cli.command('init')
+@click.argument('login')
+@click.option('--password', prompt=True, hide_input=True)
+def init(login, password):
+    """Creates a $HOME/.ptoolbox/<login>.db containing a SQLite
+    database of all pictures & albums for <login>.
+    """
+    init_user_database(utils.mail2username(login))
+
+    pc = PicasaClient()
+    pc.authenticate(login, password)
+
+    print("fetching all albums... ", end='')
+    n_albums = 0
+    for album in pc.fetch_albums():
+        album.save(force_insert=True)
+        n_albums += 1
+    print("done.")
+
+    index = 1
+    for album in models.GoogleAlbum.select():
+        print("album %03d of %03d: '%s', %d pictures" % (index, n_albums, album.title, album.num_photos))
+        for photo in pc.fetch_images(album.id):
+            print('.', end='')
+            sys.stdout.flush()
+            photo.save(force_insert=True)
+        index += 1
+        print('\n')
+
+    models.db.close()
+
+
+@cli.command('sync')
+@click.argument('login')
+@click.argument('path')
+@click.option('--password', prompt=True, hide_input=True)
+@click.option('--preinit/--no-preinit', default=True)
+def sync(login, path, password, preinit):
+    """Synchronizes the <login> Google+ Photos account with a
+    local folder in <path>.
+    Procedure:
+        - Downloads every remote picture that isn't matched by a local one
+        - Uploads every picture that doesn't exist online.
+    The default behaviour is to create an offline folder for
+    every online album.
+    Pictures in <path> are deep-located and moved to their root
+    album directory if needed.
+    """
+    if preinit:
+        init(login, password)
+    pass
+
+
+@cli.command('flatten')
+@click.argument('login')
+@click.argument('path')
+def flatten(login, path):
+    pass
+
+
+@cli.command('unflatten')
+@click.argument('login')
+@click.argument('path')
+def unflatten(login, path):
+    pass
+
+
+"""
+Commands below are soon-to-be deprecated
+"""
 
 
 @cli.command()
@@ -44,7 +130,7 @@ def analyze(path):
 
     for img in list_valid_images(path, deep=True):
         n_pictures_total += 1
-        print img.name, img.width, img.time
+        print(img.name, img.width, img.time)
 
         # implements double picture detection
         if img.checksum in pictures:
@@ -60,16 +146,16 @@ def analyze(path):
             albums[img.album_title].append(img)
             n_pictures_good += 1
 
-    print '> processed\n\t%d total images\n\t%d valid images\n\t%d orphan images\n\t%d duplicates' % (
-        n_pictures_total, n_pictures_good, n_pictures_orphan, len(duplicates_hashes))
-    print '---- albums'
+    print('> processed\t%d total images\t%d valid images\t%d orphan images\t%d duplicates' % (
+        n_pictures_total, n_pictures_good, n_pictures_orphan, len(duplicates_hashes)))
+    print('---- albums')
     for k, v in albums.iteritems():
-        print '%s: %d images' % (k, len(v))
-    print '---- double images'
+        print('%s: %d images' % (k, len(v)))
+    print('---- double images')
     for h in duplicates_hashes:
-        print "hash: '%s'" % h
+        print("hash: '%s'" % h)
         for img in pictures[h]:
-            print '\t%s' % img.path
+            print('\t%s' % img.path)
 
 
 @cli.command(help="Flattens valid images from SOURCE to DEST, renaming them opionatedly.")
@@ -101,8 +187,8 @@ def listalbums(email, password):
     p = PicasaClient()
     p.authenticate(email, password)
     for album in p.fetch_albums():
-        print "%s - '%s' [%s-%s] (%s)" % (
-            album.published.isoformat(), album.id, album.title, album.name, album.author)
+        print("%s - '%s' [%s-%s] (%s)" % (
+            album.published.isoformat(), album.id, album.title, album.name, album.author))
 
 
 @cli.command('list_images')
@@ -113,8 +199,8 @@ def listimages(email, password, album_id):
     p = PicasaClient()
     p.authenticate(email, password)
     for img in p.fetch_images(album_id):
-        print "%s / %s - '%s' [%sx%s]" % (
-            img.time.isoformat(), img.id, img.title, img.width, img.height)
+        print("%s / %s - '%s' [%sx%s]" % (
+            img.time.isoformat(), img.uuid, img.title, img.width, img.height))
 
 
 @cli.command('get_image')
@@ -122,11 +208,11 @@ def listimages(email, password, album_id):
 @click.option('--password', prompt=True, hide_input=True)
 @click.argument('album_id', default='default')
 @click.argument('photo_id')
-def listimages(email, password, album_id, photo_id):
+def get_image(email, password, album_id, photo_id):
     p = PicasaClient()
     p.authenticate(email, password)
     photo = p.get_image(photo_id, album_id)
-    print photo.title, photo.url
+    print(photo.title, photo.url)
 
 
 @cli.command('delete_album')

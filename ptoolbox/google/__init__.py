@@ -6,6 +6,7 @@ import json
 import requests
 
 from datetime import datetime
+from requests.exceptions import ConnectionError, SSLError
 
 from ptoolbox import log
 from ptoolbox.conf import settings
@@ -13,6 +14,22 @@ from ptoolbox.conf import settings
 from .utils import dt2ts, mail2username, g_xml_value, g_json_value
 from .models import GoogleAlbum, GooglePhoto
 from .constants import ACCESS_PRIVATE, ALBUM_FIELDS, PHOTO_FIELDS
+
+
+def request_with_retry(method, n_retries=settings.N_MAX_ATTEMPTS, **kwargs):
+    s = requests.Session()
+    req = requests.Request(method, **kwargs)
+    prepped = req.prepare()
+    try:
+        res = s.send(prepped)
+    except (ValueError, IOError, SSLError, ConnectionError):
+        log.debug("request: '%s %s' failed, retrying." % (method, kwargs['url']))
+        if n_retries <= 1:
+            raise
+        return request_with_retry(method, n_retries=n_retries-1, **kwargs)
+    if res.status_code not in (200, 201, 202, 204):
+        return request_with_retry(method, n_retries=n_retries-1, **kwargs)
+    return res
 
 
 class PicasaClient(object):
@@ -37,7 +54,7 @@ class PicasaClient(object):
         self.password = password
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         params = {'Email': login, 'Passwd': password, 'service': self.PWA_SERVICE}
-        res = requests.post(self.AUTH_URL, params=params, headers=headers)
+        res = request_with_retry('POST', url=self.AUTH_URL, params=params, headers=headers)
         if res.status_code != 200:
             raise ValueError('authentication failed.')
         match = re.search('Auth=(\S*)', res.text)
@@ -69,23 +86,28 @@ class PicasaClient(object):
         """
         if page_size is None:
             page_size = self.page_size
+
         # update the page number
         scope_params = self._params(page_size, index)
         scope_params.update(params)
+
         # get the page
         log.debug("url = '%s', params = '%s'" % (url, json.dumps(scope_params)))
-        res = requests.get(url, params=scope_params, headers=self._headers())
-        # FIXME: can raise an SSLError
+        res = request_with_retry('GET', url=url, params=scope_params, headers=self._headers())
         if res.status_code != 200:
             raise ValueError("could not fetch Google resource: '%s'" % url)
+
+        # extract the information
         data = res.json()['feed']
         entry = data.get('entry', None)
-        if entry is None:
-            print data  # FIXME: empty album !!!
+        if entry is None:  # collection is empty, return.
             return
+
+        # yield every item as a generator
         for item in data['entry']:
             yield callback(item)
-        # keep going until all data is consumed
+
+        # iterate every page
         total_results = total if total else g_json_value(data, 'totalResults', 'openSearch')
         remaining_results = total_results - (index + page_size - 1)
         if remaining_results > 0:
@@ -137,7 +159,7 @@ class PicasaClient(object):
         <ns4:access>{access}</ns4:access>
         </ns0:entry>
         '''.format(ts=str(ts), title=title, access=access, summary=summary, location=location).strip()
-        res = requests.post(url, data=data, headers=self._headers())
+        res = request_with_retry('POST', url=url, data=data, headers=self._headers())
         if res.status_code != 201:
             raise ValueError("could not post new album: '%s'" % title)
         return g_xml_value(res.text, 'id', 'gphoto')
@@ -151,7 +173,7 @@ class PicasaClient(object):
             # from a multiple album GET
             'fields': 'entry({album_fields}),gphoto:numphotos,author'.format(album_fields=ALBUM_FIELDS),
         })
-        res = requests.get(url, params=params, headers=self._headers())
+        res = request_with_retry('GET', url=url, params=params, headers=self._headers())
         if res.status_code != 200:
             raise ValueError("could not fetch album id: '%s'" % album_id)
         return GoogleAlbum.from_raw_json(res.json()['feed'])
@@ -165,7 +187,7 @@ class PicasaClient(object):
             # from a multiple photo GET
             'fields': '{photo_fields}'.format(photo_fields=PHOTO_FIELDS),
         })
-        res = requests.get(url, params=params, headers=self._headers())
+        res = request_with_retry('GET', url=url, params=params, headers=self._headers())
         if res.status_code != 200:
             raise ValueError("could not fetch photo id: '%s'" % photo_id)
         return GooglePhoto.from_raw_json(res.json()['feed'])
@@ -176,7 +198,7 @@ class PicasaClient(object):
         headers.update({
             'If-Match': '*',  # delete the album regardless of version
         })
-        res = requests.delete(url, headers=headers)
+        res = request_with_retry('DELETE', url=url, headers=headers)
         if res.status_code != 200:
             raise ValueError("could not delete album id: '%s'" % album_id)
 
@@ -189,7 +211,7 @@ class PicasaClient(object):
             'Content-Length': os.path.getsize(path),
         })
         with open(path, 'rb') as f:
-            res = requests.post(url, headers=headers, data=f)
+            res = request_with_retry('POST', url=url, headers=headers, data=f)
         if res != 201:
             raise ValueError("upload of picture: %s [title='%s'] failed." % path, title)
         return g_xml_value(res.text, 'id', 'gphoto')

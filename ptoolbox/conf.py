@@ -11,6 +11,7 @@ default_settings = {
     'DEBUG': False,
 
     'DEFAULT_ALBUM': None,
+    'N_MAX_ATTEMPTS': 5,
     'ALBUM_STRATEGY': ALBUM_STRATEGY_USE_DEFAULT,
 
     'PICASA_CLIENT': {

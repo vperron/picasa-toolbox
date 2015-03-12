@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:gd="http://schemas.google.com/g/2005" xmlns:app="http://www.w3.org/2007/app" xmlns:gphoto="http://schemas.google.com/photos/2007" xmlns:media="http://search.yahoo.com/mrss/" gd:etag="&quot;YD0qeyI.&quot;">
+<id>https://picasaweb.google.com/data/entry/user/115358747721313605360/albumid/6116829636557739361</id>
+<published>2015-02-17T15:03:01.000Z</published>
+<updated>2015-02-17T15:03:01.366Z</updated>
+<app:edited>2015-02-17T15:03:01.366Z</app:edited>
+<category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/photos/2007#album"/>
+<title>foo</title>
+<summary/>
+<rights>private</rights>
+<link rel="http://schemas.google.com/g/2005#feed" type="application/atom+xml" href="https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/6116829636557739361?authkey=Gv1sRgCKvc19TIuIDaiwE"/>
+<link rel="alternate" type="text/html" href="https://picasaweb.google.com/115358747721313605360/Foo02?authkey=Gv1sRgCKvc19TIuIDaiwE"/>
+<link rel="self" type="application/atom+xml" href="https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6116829636557739361?authkey=Gv1sRgCKvc19TIuIDaiwE"/>
+<link rel="edit" type="application/atom+xml" href="https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6116829636557739361?authkey=Gv1sRgCKvc19TIuIDaiwE"/>
+<link rel="http://schemas.google.com/acl/2007#accessControlList" type="application/atom+xml" href="https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6116829636557739361/acl?authkey=Gv1sRgCKvc19TIuIDaiwE"/>
+<author>
+    <name>Victor Perron</name>
+    <uri>https://picasaweb.google.com/115358747721313605360</uri>
+</author>
+<gphoto:id>6116829636557739361</gphoto:id>
+<gphoto:name>Foo02</gphoto:name>
+<gphoto:location/>
+<gphoto:access>private</gphoto:access>
+<gphoto:timestamp>1424185381000</gphoto:timestamp>
+<gphoto:numphotos>0</gphoto:numphotos>
+<gphoto:numphotosremaining>2000</gphoto:numphotosremaining>
+<gphoto:bytesUsed>0</gphoto:bytesUsed>
+<gphoto:user>115358747721313605360</gphoto:user>
+<gphoto:nickname>Victor Perron</gphoto:nickname>
+<media:group>
+    <media:content url="https://lh3.googleusercontent.com/-BV1etpkuV0A/VONYJWabFWE/AAAAAAAAPvM/t08NesoWVc8/Foo02.jpg" type="image/jpeg" medium="image"/>
+    <media:credit>Victor Perron</media:credit>
+    <media:description type="plain"/>
+    <media:keywords/>
+    <media:thumbnail url="https://lh3.googleusercontent.com/-BV1etpkuV0A/VONYJWabFWE/AAAAAAAAPvM/t08NesoWVc8/s160-c/Foo02.jpg" height="160" width="160"/>
+    <media:title type="plain">foo</media:title>
+</media:group>
+</entry>

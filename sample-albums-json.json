@@ -1,0 +1,1353 @@
+{
+    "encoding": "UTF-8",
+    "feed": {
+        "author": [
+            {
+                "name": {
+                    "$t": "Victor Perron"
+                },
+                "uri": {
+                    "$t": "https://picasaweb.google.com/115358747721313605360"
+                }
+            }
+        ],
+        "category": [
+            {
+                "scheme": "http://schemas.google.com/g/2005#kind",
+                "term": "http://schemas.google.com/photos/2007#user"
+            }
+        ],
+        "entry": [
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "private"
+                },
+                "gphoto$albumType": {
+                    "$t": "InstantUpload"
+                },
+                "gphoto$id": {
+                    "$t": "1000000413605360"
+                },
+                "gphoto$name": {
+                    "$t": "InstantUpload"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 1805
+                },
+                "gphoto$timestamp": {
+                    "$t": "1423419711000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/1000000413605360?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/1000000413605360?alt=json",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360?alabel=small_instant_upload",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/1000000413605360?alt=json",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh6.googleusercontent.com/-ta748CByilE/VNewbD6b3kE/AAAAAAAAPs8/M-PJFOtHI_4/20150208.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "Sauvegarde automatique",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh6.googleusercontent.com/-ta748CByilE/VNewbD6b3kE/AAAAAAAAPs8/M-PJFOtHI_4/s160-c/20150208.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "Sauvegarde automatique",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2015-02-08T18:21:51.000Z"
+                },
+                "rights": {
+                    "$t": "protected",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "Sauvegarde automatique",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2015-02-08T18:58:41.606Z"
+                }
+            },
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "private"
+                },
+                "gphoto$bytesUsed": {
+                    "$t": "5818975"
+                },
+                "gphoto$id": {
+                    "$t": "6107909846497303841"
+                },
+                "gphoto$location": {
+                    "$t": ""
+                },
+                "gphoto$name": {
+                    "$t": "Backup"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 17
+                },
+                "gphoto$numphotosremaining": {
+                    "$t": 1983
+                },
+                "gphoto$timestamp": {
+                    "$t": "1422108413000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6107909846497303841?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/6107909846497303841?alt=json&authkey=Gv1sRgCIn2maWQ88a7yAE",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360/Backup?authkey=Gv1sRgCIn2maWQ88a7yAE",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6107909846497303841?alt=json&authkey=Gv1sRgCIn2maWQ88a7yAE",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6107909846497303841/20?alt=json&authkey=Gv1sRgCIn2maWQ88a7yAE",
+                        "rel": "edit",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6107909846497303841/acl?alt=json&authkey=Gv1sRgCIn2maWQ88a7yAE",
+                        "rel": "http://schemas.google.com/acl/2007#accessControlList",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh4.googleusercontent.com/-H3Vqsk25mbw/VMOnpPCVHSE/AAAAAAAAKkQ/uCGXR5sdIt4/Backup.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh4.googleusercontent.com/-H3Vqsk25mbw/VMOnpPCVHSE/AAAAAAAAKkQ/uCGXR5sdIt4/s160-c/Backup.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "Backup",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2015-01-24T14:06:53.000Z"
+                },
+                "rights": {
+                    "$t": "private",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "Backup",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2015-01-24T14:40:08.801Z"
+                }
+            },
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "private"
+                },
+                "gphoto$bytesUsed": {
+                    "$t": "39968779"
+                },
+                "gphoto$id": {
+                    "$t": "6102074539938729441"
+                },
+                "gphoto$location": {
+                    "$t": ""
+                },
+                "gphoto$name": {
+                    "$t": "Powermeter"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 19
+                },
+                "gphoto$numphotosremaining": {
+                    "$t": 1981
+                },
+                "gphoto$timestamp": {
+                    "$t": "1420749942000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6102074539938729441?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/6102074539938729441?alt=json&authkey=Gv1sRgCLyUsLO6552r_QE",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360/Powermeter?authkey=Gv1sRgCLyUsLO6552r_QE",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6102074539938729441?alt=json&authkey=Gv1sRgCLyUsLO6552r_QE",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6102074539938729441/5?alt=json&authkey=Gv1sRgCLyUsLO6552r_QE",
+                        "rel": "edit",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6102074539938729441/acl?alt=json&authkey=Gv1sRgCLyUsLO6552r_QE",
+                        "rel": "http://schemas.google.com/acl/2007#accessControlList",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh4.googleusercontent.com/-jNOQjsph62c/VK7sdsIAzeE/AAAAAAAAKUg/y7Iga7bB7Lc/Powermeter.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh4.googleusercontent.com/-jNOQjsph62c/VK7sdsIAzeE/AAAAAAAAKUg/y7Iga7bB7Lc/s160-c/Powermeter.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "Powermeter",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2015-01-08T20:45:42.000Z"
+                },
+                "rights": {
+                    "$t": "private",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "Powermeter",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2015-01-08T20:46:16.820Z"
+                }
+            },
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "private"
+                },
+                "gphoto$bytesUsed": {
+                    "$t": "33740416"
+                },
+                "gphoto$id": {
+                    "$t": "6102073647200334097"
+                },
+                "gphoto$location": {
+                    "$t": ""
+                },
+                "gphoto$name": {
+                    "$t": "NouvelAn201502"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 16
+                },
+                "gphoto$numphotosremaining": {
+                    "$t": 1984
+                },
+                "gphoto$timestamp": {
+                    "$t": "1420749734000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6102073647200334097?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/6102073647200334097?alt=json&authkey=Gv1sRgCLCF3paDrqfFBw",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360/NouvelAn201502?authkey=Gv1sRgCLCF3paDrqfFBw",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6102073647200334097?alt=json&authkey=Gv1sRgCLCF3paDrqfFBw",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6102073647200334097/4?alt=json&authkey=Gv1sRgCLCF3paDrqfFBw",
+                        "rel": "edit",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6102073647200334097/acl?alt=json&authkey=Gv1sRgCLCF3paDrqfFBw",
+                        "rel": "http://schemas.google.com/acl/2007#accessControlList",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh5.googleusercontent.com/-rgNnAz4QrMw/VK7rpual8RE/AAAAAAAAKVE/5X8HxPqx_7A/NouvelAn201502.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh5.googleusercontent.com/-rgNnAz4QrMw/VK7rpual8RE/AAAAAAAAKVE/5X8HxPqx_7A/s160-c/NouvelAn201502.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "Nouvel An 2015",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2015-01-08T20:42:14.000Z"
+                },
+                "rights": {
+                    "$t": "private",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "Nouvel An 2015",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2015-01-08T20:47:10.727Z"
+                }
+            },
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "private"
+                },
+                "gphoto$bytesUsed": {
+                    "$t": "733"
+                },
+                "gphoto$id": {
+                    "$t": "6095868893705215489"
+                },
+                "gphoto$location": {
+                    "$t": ""
+                },
+                "gphoto$name": {
+                    "$t": "YearInPhotos2014"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 1
+                },
+                "gphoto$numphotosremaining": {
+                    "$t": 1999
+                },
+                "gphoto$timestamp": {
+                    "$t": "1419305078000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6095868893705215489?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/6095868893705215489?alt=json&authkey=Gv1sRgCN2or5n0z-Ld4gE",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360/YearInPhotos2014?authkey=Gv1sRgCN2or5n0z-Ld4gE",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6095868893705215489?alt=json&authkey=Gv1sRgCN2or5n0z-Ld4gE",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6095868893705215489/3?alt=json&authkey=Gv1sRgCN2or5n0z-Ld4gE",
+                        "rel": "edit",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6095868893705215489/acl?alt=json&authkey=Gv1sRgCN2or5n0z-Ld4gE",
+                        "rel": "http://schemas.google.com/acl/2007#accessControlList",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh5.googleusercontent.com/-hBKYtAnIgos/VJjgdianHgE/AAAAAAAAJh8/ec0d4XZFzQE/YearInPhotos2014.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "Year in Photos 2014",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh5.googleusercontent.com/-hBKYtAnIgos/VJjgdianHgE/AAAAAAAAJh8/ec0d4XZFzQE/s160-c/YearInPhotos2014.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "Year in Photos 2014",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2014-12-23T03:24:38.000Z"
+                },
+                "rights": {
+                    "$t": "private",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "Year in Photos 2014",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "Year in Photos 2014",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2014-12-23T03:29:54.663Z"
+                }
+            },
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "protected"
+                },
+                "gphoto$bytesUsed": {
+                    "$t": "1297585"
+                },
+                "gphoto$id": {
+                    "$t": "6049796237464367329"
+                },
+                "gphoto$location": {
+                    "$t": ""
+                },
+                "gphoto$name": {
+                    "$t": "HangoutLeonorPistacheVictorPerron"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 4
+                },
+                "gphoto$numphotosremaining": {
+                    "$t": 1996
+                },
+                "gphoto$timestamp": {
+                    "$t": "1408577951000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6049796237464367329?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/6049796237464367329?alt=json",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360/HangoutLeonorPistacheVictorPerron?locked=true",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6049796237464367329?alt=json",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6049796237464367329/10?alt=json",
+                        "rel": "edit",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6049796237464367329/acl?alt=json",
+                        "rel": "http://schemas.google.com/acl/2007#accessControlList",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh6.googleusercontent.com/-ND_2QwIp_4Q/U_Uxn_GO8OE/AAAAAAAAJK4/tOCrllEZJfE/HangoutLeonorPistacheVictorPerron.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh6.googleusercontent.com/-ND_2QwIp_4Q/U_Uxn_GO8OE/AAAAAAAAJK4/tOCrllEZJfE/s160-c/HangoutLeonorPistacheVictorPerron.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "Hangout: L\u00e9onor Pistache \u25cf Victor Perron",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2014-08-20T23:39:11.000Z"
+                },
+                "rights": {
+                    "$t": "protected",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "Hangout: L\u00e9onor Pistache \u25cf Victor Perron",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2014-09-22T21:28:55.108Z"
+                }
+            },
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "protected"
+                },
+                "gphoto$bytesUsed": {
+                    "$t": "38249870"
+                },
+                "gphoto$id": {
+                    "$t": "6051532338699383073"
+                },
+                "gphoto$location": {
+                    "$t": ""
+                },
+                "gphoto$name": {
+                    "$t": "82514"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 60
+                },
+                "gphoto$numphotosremaining": {
+                    "$t": 1940
+                },
+                "gphoto$timestamp": {
+                    "$t": "1408982169000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6051532338699383073?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/6051532338699383073?alt=json",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360/82514",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6051532338699383073?alt=json",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6051532338699383073/5?alt=json",
+                        "rel": "edit",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6051532338699383073/acl?alt=json",
+                        "rel": "http://schemas.google.com/acl/2007#accessControlList",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh3.googleusercontent.com/-nvWE8rJp0r8/U_tcmYL3MSE/AAAAAAAAJHU/_4yysSwVq-E/82514.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh3.googleusercontent.com/-nvWE8rJp0r8/U_tcmYL3MSE/AAAAAAAAJHU/_4yysSwVq-E/s160-c/82514.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "8/25/14",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2014-08-25T15:56:09.000Z"
+                },
+                "rights": {
+                    "$t": "protected",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "8/25/14",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2014-08-25T16:22:13.168Z"
+                }
+            },
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "private"
+                },
+                "gphoto$bytesUsed": {
+                    "$t": "3910630"
+                },
+                "gphoto$id": {
+                    "$t": "6107910220199451265"
+                },
+                "gphoto$location": {
+                    "$t": ""
+                },
+                "gphoto$name": {
+                    "$t": "EVGUgo"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 2
+                },
+                "gphoto$numphotosremaining": {
+                    "$t": 1998
+                },
+                "gphoto$timestamp": {
+                    "$t": "1408626353000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6107910220199451265?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/6107910220199451265?alt=json&authkey=Gv1sRgCPnf66aLh_LYOw",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360/EVGUgo?authkey=Gv1sRgCPnf66aLh_LYOw",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6107910220199451265?alt=json&authkey=Gv1sRgCPnf66aLh_LYOw",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6107910220199451265/5?alt=json&authkey=Gv1sRgCPnf66aLh_LYOw",
+                        "rel": "edit",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6107910220199451265/acl?alt=json&authkey=Gv1sRgCPnf66aLh_LYOw",
+                        "rel": "http://schemas.google.com/acl/2007#accessControlList",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh5.googleusercontent.com/-AD07QIKITbs/VMOn-_L3WoE/AAAAAAAAKiE/TDRNudBcAdM/EVGUgo.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh5.googleusercontent.com/-AD07QIKITbs/VMOn-_L3WoE/AAAAAAAAKiE/TDRNudBcAdM/s160-c/EVGUgo.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "EVG Ugo",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2014-08-21T13:05:53.000Z"
+                },
+                "rights": {
+                    "$t": "private",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "EVG Ugo",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2015-01-24T14:35:45.039Z"
+                }
+            },
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "protected"
+                },
+                "gphoto$bytesUsed": {
+                    "$t": "2006717"
+                },
+                "gphoto$id": {
+                    "$t": "5936771943411245649"
+                },
+                "gphoto$location": {
+                    "$t": ""
+                },
+                "gphoto$name": {
+                    "$t": "HangoutVictorPerronAxelleAllouchLombard"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 2
+                },
+                "gphoto$numphotosremaining": {
+                    "$t": 1998
+                },
+                "gphoto$timestamp": {
+                    "$t": "1382262432000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/5936771943411245649?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/5936771943411245649?alt=json",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360/HangoutVictorPerronAxelleAllouchLombard?locked=true",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/5936771943411245649?alt=json",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/5936771943411245649/6?alt=json",
+                        "rel": "edit",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/5936771943411245649/acl?alt=json",
+                        "rel": "http://schemas.google.com/acl/2007#accessControlList",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh3.googleusercontent.com/-8rzwqppKYLM/UmOmoM-IYlE/AAAAAAAAI20/OteHRHbnXQY/HangoutVictorPerronAxelleAllouchLombard.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh3.googleusercontent.com/-8rzwqppKYLM/UmOmoM-IYlE/AAAAAAAAI20/OteHRHbnXQY/s160-c/HangoutVictorPerronAxelleAllouchLombard.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "Hangout: Victor Perron \u25cf axelle allouch-lombard",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2013-10-20T09:47:12.000Z"
+                },
+                "rights": {
+                    "$t": "protected",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "Hangout: Victor Perron \u25cf axelle allouch-lombard",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2014-08-19T11:42:42.491Z"
+                }
+            },
+            {
+                "author": [
+                    {
+                        "name": {
+                            "$t": "Victor Perron"
+                        },
+                        "uri": {
+                            "$t": "https://picasaweb.google.com/115358747721313605360"
+                        }
+                    }
+                ],
+                "category": [
+                    {
+                        "scheme": "http://schemas.google.com/g/2005#kind",
+                        "term": "http://schemas.google.com/photos/2007#album"
+                    }
+                ],
+                "gphoto$access": {
+                    "$t": "protected"
+                },
+                "gphoto$bytesUsed": {
+                    "$t": "2461129"
+                },
+                "gphoto$id": {
+                    "$t": "6042719137530161665"
+                },
+                "gphoto$location": {
+                    "$t": ""
+                },
+                "gphoto$name": {
+                    "$t": "HangoutSophianBensaouVictorPerronUgoBataillard"
+                },
+                "gphoto$nickname": {
+                    "$t": "Victor Perron"
+                },
+                "gphoto$numphotos": {
+                    "$t": 2
+                },
+                "gphoto$numphotosremaining": {
+                    "$t": 1998
+                },
+                "gphoto$timestamp": {
+                    "$t": "1406930185000"
+                },
+                "gphoto$user": {
+                    "$t": "115358747721313605360"
+                },
+                "id": {
+                    "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6042719137530161665?alt=json"
+                },
+                "link": [
+                    {
+                        "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/6042719137530161665?alt=json",
+                        "rel": "http://schemas.google.com/g/2005#feed",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/115358747721313605360/HangoutSophianBensaouVictorPerronUgoBataillard?locked=true",
+                        "rel": "alternate",
+                        "type": "text/html"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6042719137530161665?alt=json",
+                        "rel": "self",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6042719137530161665/4?alt=json",
+                        "rel": "edit",
+                        "type": "application/atom+xml"
+                    },
+                    {
+                        "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/6042719137530161665/acl?alt=json",
+                        "rel": "http://schemas.google.com/acl/2007#accessControlList",
+                        "type": "application/atom+xml"
+                    }
+                ],
+                "media$group": {
+                    "media$content": [
+                        {
+                            "medium": "image",
+                            "type": "image/jpeg",
+                            "url": "https://lh6.googleusercontent.com/-N7NN1cf2IQc/U9wNCjXwqgE/AAAAAAAAIzI/iQJCDG76OUo/HangoutSophianBensaouVictorPerronUgoBataillard.jpg"
+                        }
+                    ],
+                    "media$credit": [
+                        {
+                            "$t": "Victor Perron"
+                        }
+                    ],
+                    "media$description": {
+                        "$t": "",
+                        "type": "plain"
+                    },
+                    "media$keywords": {},
+                    "media$thumbnail": [
+                        {
+                            "height": 160,
+                            "url": "https://lh6.googleusercontent.com/-N7NN1cf2IQc/U9wNCjXwqgE/AAAAAAAAIzI/iQJCDG76OUo/s160-c/HangoutSophianBensaouVictorPerronUgoBataillard.jpg",
+                            "width": 160
+                        }
+                    ],
+                    "media$title": {
+                        "$t": "Hangout: Sophian Bensaou \u25cf Victor Perron \u25cf Ugo Bataillard",
+                        "type": "plain"
+                    }
+                },
+                "published": {
+                    "$t": "2014-08-01T21:56:25.000Z"
+                },
+                "rights": {
+                    "$t": "protected",
+                    "type": "text"
+                },
+                "summary": {
+                    "$t": "",
+                    "type": "text"
+                },
+                "title": {
+                    "$t": "Hangout: Sophian Bensaou \u25cf Victor Perron \u25cf Ugo Bataillard",
+                    "type": "text"
+                },
+                "updated": {
+                    "$t": "2014-08-01T22:17:00.732Z"
+                }
+            }
+        ],
+        "generator": {
+            "$t": "Picasaweb",
+            "uri": "http://picasaweb.google.com/",
+            "version": "1.00"
+        },
+        "gphoto$maxPhotosPerAlbum": {
+            "$t": 2000
+        },
+        "gphoto$nickname": {
+            "$t": "Victor Perron"
+        },
+        "gphoto$quotacurrent": {
+            "$t": "10034975641"
+        },
+        "gphoto$quotalimit": {
+            "$t": "16106127360"
+        },
+        "gphoto$thumbnail": {
+            "$t": "https://lh4.googleusercontent.com/-T6P3p7C_41I/AAAAAAAAAAI/AAAAAAAAAAA/Otco7KBdVeQ/s64-c/115358747721313605360.jpg"
+        },
+        "gphoto$user": {
+            "$t": "115358747721313605360"
+        },
+        "icon": {
+            "$t": "https://lh4.googleusercontent.com/-T6P3p7C_41I/AAAAAAAAAAI/AAAAAAAAAAA/Otco7KBdVeQ/s64-c/115358747721313605360.jpg"
+        },
+        "id": {
+            "$t": "https://picasaweb.google.com/data/feed/api/user/perron.victor"
+        },
+        "link": [
+            {
+                "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360?alt=json",
+                "rel": "http://schemas.google.com/g/2005#feed",
+                "type": "application/atom+xml"
+            },
+            {
+                "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360?alt=json",
+                "rel": "http://schemas.google.com/g/2005#post",
+                "type": "application/atom+xml"
+            },
+            {
+                "href": "https://picasaweb.google.com/115358747721313605360",
+                "rel": "alternate",
+                "type": "text/html"
+            },
+            {
+                "href": "https://photos.gstatic.com/media/slideshow.swf?host=picasaweb.google.com&RGB=0x000000&feed=https://picasaweb.google.com/data/feed/api/user/115358747721313605360?alt%3Drss",
+                "rel": "http://schemas.google.com/photos/2007#slideshow",
+                "type": "application/x-shockwave-flash"
+            },
+            {
+                "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360?alt=json&start-index=1&max-results=10&kind=album",
+                "rel": "self",
+                "type": "application/atom+xml"
+            },
+            {
+                "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360?alt=json&start-index=11&max-results=10&kind=album",
+                "rel": "next",
+                "type": "application/atom+xml"
+            }
+        ],
+        "openSearch$itemsPerPage": {
+            "$t": 10
+        },
+        "openSearch$startIndex": {
+            "$t": 1
+        },
+        "openSearch$totalResults": {
+            "$t": 211
+        },
+        "subtitle": {
+            "$t": "",
+            "type": "text"
+        },
+        "title": {
+            "$t": "115358747721313605360",
+            "type": "text"
+        },
+        "updated": {
+            "$t": "2015-02-12T11:07:16.921Z"
+        },
+        "xmlns": "http://www.w3.org/2005/Atom",
+        "xmlns$gphoto": "http://schemas.google.com/photos/2007",
+        "xmlns$media": "http://search.yahoo.com/mrss/",
+        "xmlns$openSearch": "http://a9.com/-/spec/opensearchrss/1.0/"
+    },
+    "version": "1.0"
+}

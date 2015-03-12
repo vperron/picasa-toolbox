@@ -1,0 +1,110 @@
+{
+  "author": [
+  {
+    "name": {
+      "$t": "Victor Perron"
+    },
+    "uri": {
+      "$t": "https://picasaweb.google.com/115358747721313605360"
+    }
+  }
+  ],
+    "category": [
+    {
+      "scheme": "http://schemas.google.com/g/2005#kind",
+      "term": "http://schemas.google.com/photos/2007#album"
+    }
+  ],
+    "gphoto$access": {
+      "$t": "private"
+    },
+    "gphoto$albumType": {
+      "$t": "InstantUpload"
+    },
+    "gphoto$id": {
+      "$t": "1000000413605360"
+    },
+    "gphoto$name": {
+      "$t": "InstantUpload"
+    },
+    "gphoto$nickname": {
+      "$t": "Victor Perron"
+    },
+    "gphoto$numphotos": {
+      "$t": 1805
+    },
+    "gphoto$timestamp": {
+      "$t": "1423419711000"
+    },
+    "gphoto$user": {
+      "$t": "115358747721313605360"
+    },
+    "id": {
+      "$t": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/1000000413605360?alt=json"
+    },
+    "link": [
+    {
+      "href": "https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/1000000413605360?alt=json",
+      "rel": "http://schemas.google.com/g/2005#feed",
+      "type": "application/atom+xml"
+    },
+    {
+      "href": "https://picasaweb.google.com/115358747721313605360?alabel=small_instant_upload",
+      "rel": "alternate",
+      "type": "text/html"
+    },
+    {
+      "href": "https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/1000000413605360?alt=json",
+      "rel": "self",
+      "type": "application/atom+xml"
+    }
+  ],
+    "media$group": {
+      "media$content": [
+      {
+        "medium": "image",
+        "type": "image/jpeg",
+        "url": "https://lh6.googleusercontent.com/-ta748CByilE/VNewbD6b3kE/AAAAAAAAPs8/M-PJFOtHI_4/20150208.jpg"
+      }
+      ],
+        "media$credit": [
+        {
+          "$t": "Victor Perron"
+        }
+      ],
+        "media$description": {
+          "$t": "Sauvegarde automatique",
+          "type": "plain"
+        },
+        "media$keywords": {},
+        "media$thumbnail": [
+        {
+          "height": 160,
+          "url": "https://lh6.googleusercontent.com/-ta748CByilE/VNewbD6b3kE/AAAAAAAAPs8/M-PJFOtHI_4/s160-c/20150208.jpg",
+          "width": 160
+        }
+      ],
+        "media$title": {
+          "$t": "Sauvegarde automatique",
+          "type": "plain"
+        }
+    },
+    "published": {
+      "$t": "2015-02-08T18:21:51.000Z"
+    },
+    "rights": {
+      "$t": "protected",
+      "type": "text"
+    },
+    "summary": {
+      "$t": "",
+      "type": "text"
+    },
+    "title": {
+      "$t": "Sauvegarde automatique",
+      "type": "text"
+    },
+    "updated": {
+      "$t": "2015-02-08T18:58:41.606Z"
+    }
+},

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-16"?>
+<entry gd:etag="&quot;YD0qeyI.&quot;" xmlns="http://www.w3.org/2005/Atom" xmlns:gd="http://schemas.google.com/g/2005" xmlns:app="http://www.w3.org/2007/app" xmlns:gphoto="http://schemas.google.com/photos/2007" xmlns:exif="http://schemas.google.com/photos/exif/2007" xmlns:media="http://search.yahoo.com/mrss/">
+  <id>https://picasaweb.google.com/data/entry/user/115358747721313605360/albumid/5300196905623697857/photoid/6117552726467490018</id>
+  <published>2015-02-19T13:48:58.000Z</published>
+  <updated>2015-02-19T13:48:58.917Z</updated>
+  <app:edited>2015-02-19T13:48:58.917Z</app:edited>
+  <category scheme="http://schemas.google.com/g/2005#kind" term="http://schemas.google.com/photos/2007#photo" />
+  <title>tructruc</title>
+  <summary />
+  <content type="image/jpeg" src="https://lh5.googleusercontent.com/-hDA3ax-VpRQ/VOXpyuPRMOI/AAAAAAAAP2k/c-QA1CR-Vvs/tructruc.jpg" />
+  <link rel="http://schemas.google.com/g/2005#feed" type="application/atom+xml" href="https://picasaweb.google.com/data/feed/api/user/115358747721313605360/albumid/5300196905623697857/photoid/6117552726467490018?authkey=Gv1sRgCMnL74DPuqf47QE" />
+  <link rel="alternate" type="text/html" href="https://picasaweb.google.com/115358747721313605360/DropBox?authkey=Gv1sRgCMnL74DPuqf47QE#6117552726467490018" />
+  <link rel="http://schemas.google.com/photos/2007#canonical" type="text/html" href="https://picasaweb.google.com/lh/photo/acRZJGFEFgHxlzX4Rl47BEFLMQ1dYHnTGUl-UxfxRnY" />
+  <link rel="self" type="application/atom+xml" href="https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/5300196905623697857/photoid/6117552726467490018?authkey=Gv1sRgCMnL74DPuqf47QE" />
+  <link rel="edit" type="application/atom+xml" href="https://picasaweb.google.com/data/entry/api/user/115358747721313605360/albumid/5300196905623697857/photoid/6117552726467490018?authkey=Gv1sRgCMnL74DPuqf47QE" />
+  <link rel="edit-media" type="image/jpeg" href="https://picasaweb.google.com/data/media/api/user/115358747721313605360/albumid/5300196905623697857/photoid/6117552726467490018?authkey=Gv1sRgCMnL74DPuqf47QE" />
+  <link rel="http://schemas.google.com/photos/2007#report" type="text/html" href="https://picasaweb.google.com/lh/reportAbuse?uname=115358747721313605360&amp;aid=5300196905623697857&amp;iid=6117552726467490018" />
+  <gphoto:id>6117552726467490018</gphoto:id>
+  <gphoto:albumid>5300196905623697857</gphoto:albumid>
+  <gphoto:access>private</gphoto:access>
+  <gphoto:width>1339</gphoto:width>
+  <gphoto:height>1000</gphoto:height>
+  <gphoto:size>99980</gphoto:size>
+  <gphoto:checksum />
+  <gphoto:timestamp>1424353738000</gphoto:timestamp>
+  <gphoto:imageVersion>16233</gphoto:imageVersion>
+  <gphoto:commentingEnabled>true</gphoto:commentingEnabled>
+  <gphoto:commentCount>0</gphoto:commentCount>
+  <gphoto:streamId>shared_group_6117552726467490018</gphoto:streamId>
+  <gphoto:license id="0" name="Tous droits réservés" url="">ALL_RIGHTS_RESERVED</gphoto:license>
+  <gphoto:shapes faces="done">
+    <gphoto:shape id="74a91c4d29d6c17" upperLeft="468 157" lowerRight="820 566" type="face" status="unnamed" created="auto" modified="1424353738" canApprove="false" canEdit="true" editUrl="https://picasaweb.google.com/data/entry/api/user/115358747721313605360/photoid/6117552726467490018/shapeid/74a91c4d29d6c17?tok=QUI1UGxRWTdUWV9VNmNmNmhpR1lxZ3pRb0RIa2x1c0RPdzoxNDI0MzUzNzM4ODU2" />
+  </gphoto:shapes>
+  <exif:tags>
+    <exif:imageUniqueID>ad0acf00c4e349080000000000000000</exif:imageUniqueID>
+  </exif:tags>
+  <media:group>
+    <media:content url="https://lh5.googleusercontent.com/-hDA3ax-VpRQ/VOXpyuPRMOI/AAAAAAAAP2k/c-QA1CR-Vvs/tructruc.jpg" height="383" width="512" type="image/jpeg" medium="image" />
+    <media:credit>Victor Perron</media:credit>
+    <media:description type="plain" />
+    <media:keywords />
+    <media:thumbnail url="https://lh5.googleusercontent.com/-hDA3ax-VpRQ/VOXpyuPRMOI/AAAAAAAAP2k/c-QA1CR-Vvs/s72/tructruc.jpg" height="54" width="72" />
+    <media:thumbnail url="https://lh5.googleusercontent.com/-hDA3ax-VpRQ/VOXpyuPRMOI/AAAAAAAAP2k/c-QA1CR-Vvs/s144/tructruc.jpg" height="108" width="144" />
+    <media:thumbnail url="https://lh5.googleusercontent.com/-hDA3ax-VpRQ/VOXpyuPRMOI/AAAAAAAAP2k/c-QA1CR-Vvs/s288/tructruc.jpg" height="216" width="288" />
+    <media:title type="plain">tructruc</media:title>
+  </media:group>
+</entry>
+"""

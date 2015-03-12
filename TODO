@@ -1,0 +1,66 @@
+
+### FEATURES
+
+- Grep the FIXMEs
+- Il faut mettre en place des RETRY sur paginated fetch, etc etc
+
+- Add a command to move every ONLINE picture to the default album.
+- Add a command to rename every ONLINE picture to its canonical format. 
+
+- Photo resizing using pillow
+  http://stackoverflow.com/questions/23168670/how-to-resize-uploaded-file-with-pil-before-saving-it
+
+  If picture has no date conflict with a local one, download it, rename it accordingly.
+  (if no UniqueImageID tag, use the md5 as suffix; if it's there, use that instead)
+
+  If picture has a date conflict:  (some local picture has same date)
+  * there's a ImageUniqueId in both.
+    -> if no match it's OK, download and name it;
+    -> if it matches, it's same image (same date, same ID) : keep the biggest one in local
+  * there's no ImageUniqueId in WEB version: download, use MD5 as unique ID, patch online tag.
+  * there's no ImageUniqueId in LOCAL version: compute the MD5, check if theres a match,
+    if not just download the other image and go with it.
+
+
+- Replace exifread by pexif: adds tag writing calpability, code is WAY better as well.
+
+
+
+### DISTRIBUTION
+
+- Brush up the README & setup.py: dependencies, etc
+
+- Comment everything so that it's easily reusable, understandable and modifiable
+
+### LATER
+
+- Maybe use xml instead of json in the end...
+
+
+
+
+### DONE
+- Download pictures, seems there's a way. Eithersee pycasa's code
+
+    URL feedUrl = new URL("https://picasaweb.google.com/data/feed/api/user/default?kind=album");
+    PicasawebService myService = new PicasawebService("company-app-version");
+    myService.setUserCredentials(username, secretpassword);
+    UserFeed userFeed = myService.getFeed(feedUrl, UserFeed.class);
+    for (AlbumEntry albumEntry : userFeed.getAlbumEntries()) {
+      URL albumFeedUrl = new URL("https://picasaweb.google.com/data/feed/api/user/default/albumid/"
+                                  + albumEntry.getGphotoId() + "?imgmax=d");
+      System.out.println("Album feed:" + albumFeedUrl.toString());
+      AlbumFeed albumFeed = myService.getFeed(albumFeedUrl, AlbumFeed.class);
+      for(PhotoEntry photoEntry : albumFeed.getPhotoEntries()) {
+        System.out.println("Full-size url:" + photoEntry.getMediaContents().get(0).getUrl());
+      }
+    }
+
+- Add n_photos to GoogleAlbum object
+- The start-index param does not work for images and there is a limit to 1000 images.
+  ---> FIX: actually the totalResults should be ignored. Use something else instead,
+            for instance the actual number of images in the Album description, and do not check
+            openSearch:totalResults.
+- Remove need for the libexif and read the tags directly. 
+  Size: http://stackoverflow.com/questions/8032642/how-to-obtain-image-size-using-standard-python-class-without-using-external-lib
+

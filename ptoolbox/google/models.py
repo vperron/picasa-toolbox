@@ -76,11 +76,12 @@ class GooglePhoto(BaseModel):
         return GooglePhoto(**res)
 
 
-def init_database(name):
+def init_database(name, reset=False):
     db.init(name)
     db.connect()
-    db.drop_tables([GoogleAlbum, GooglePhoto])  # reinit everytime. no support for update yet.
-    db.create_tables([GoogleAlbum, GooglePhoto])
+    if reset:
+        db.drop_tables([GoogleAlbum, GooglePhoto])
+        db.create_tables([GoogleAlbum, GooglePhoto])
 
 
 def close_database(name):

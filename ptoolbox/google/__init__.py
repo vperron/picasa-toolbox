@@ -215,3 +215,7 @@ class PicasaClient(object):
         if res != 201:
             raise ValueError("upload of picture: %s [title='%s'] failed." % path, title)
         return g_xml_value(res.text, 'id', 'gphoto')
+
+
+# Singleton to be used by importers
+picasa_client = PicasaClient()

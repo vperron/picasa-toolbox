@@ -1,6 +1,22 @@
 """
 Older commands, now deprecated.
 """
+@cli.command()
+@click.argument('login')
+def foo(login):
+    from playhouse.migrate import *
+    from google.models import db
+    init_user_database(login)
+
+    migrator = SqliteMigrator(db)
+
+    status_field = IntegerField(null=True)
+
+    with db.transaction():
+        migrate(
+            migrator.add_column('GooglePhoto', 'status', status_field),
+        )
+
 
 
 @click.argument('path')

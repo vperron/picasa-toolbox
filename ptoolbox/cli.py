@@ -19,14 +19,14 @@ from ptoolbox import log
 from .conf import settings
 from .google import picasa_client as pc, utils, models
 from .path import ptoolbox_dir, ensure_directory, download_file
-from .utils import count_files, list_valid_images
+from .utils import count_files, list_valid_images, dt2str
 
 
-def init_user_database(login):
+def init_user_database(login, reset=False):
     """Inits the SQLite database for the given user"""
     ensure_directory(ptoolbox_dir)
     db_file_path = os.path.join(ptoolbox_dir, '%s.db' % login)
-    models.init_database(db_file_path)
+    models.init_database(db_file_path, reset)
 
 
 @click.group()
@@ -88,20 +88,31 @@ def sync(login, path, password, preinit):
     else:
         init_user_database(utils.mail2username(login))
 
-    # TODO: make a first pass to check how many we'll be downloading,
-    # conflicts, etc. THEN, synchronize. Also enables --dry-run flags !
-    for album in models.GoogleAlbum.select():
-        album_path = os.path.join(path, album.name)
-        ensure_directory(album_path)
-        for img in album.photos:
-            img_filename = '%s.jpg' % (img.time.strftime('%Y-%m-%dT%H%M%S'), )
-            img_path = os.path.join(album_path, img_filename)
-            if not os.path.exists(img_path):
-                download_file(img.url, img_path)
-                print("> downloaded: img '%s'" % (img_filename,))
-            else:
-                print("> exists: img '%s'" % (img_filename,))
-    pass
+    for img in list_valid_images(path, deep=True):
+        if img.time == None:
+            continue  # ignore images that have no time, pollutes online album. Move them ?
+        try:
+            qs = models.GooglePhoto.select().where(models.GooglePhoto.time == img.time)
+            print("SELECT TIME", img.name, img.time, qs.count())
+        except models.GooglePhoto.DoesNotExist as e:
+            # upload it
+            print('must upload %s' % img.name)
+            pass
+
+    # # TODO: make a first pass to check how many we'll be downloading,
+    # # conflicts, etc. THEN, synchronize. Also enables --dry-run flags !
+    # for album in models.GoogleAlbum.select():
+    #     album_path = os.path.join(path, album.name)
+    #     ensure_directory(album_path)
+    #     for img in album.photos:
+    #         img_filename = '%s.jpg' % (img.time.strftime('%Y-%m-%dT%H%M%S'), )
+    #         img_path = os.path.join(album_path, img_filename)
+    #         if not os.path.exists(img_path):
+    #             download_file(img.url, img_path)
+    #             print("> downloaded: img '%s'" % (img_filename,))
+    #         else:
+    #             print("> exists: img '%s'" % (img_filename,))
+    # pass
 
 
 @cli.command('flatten')

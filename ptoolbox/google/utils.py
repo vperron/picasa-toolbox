@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import requests
 from xml.etree import ElementTree
 from datetime import datetime, timedelta
 
-from .constants import epoch, G_XML_ROOT, G_XML_NAMESPACES
+from .constants import epoch, G_XML_ROOT, G_XML_NAMESPACES, TZ_API_URL
 
 
 def ts2dt(ts, millisecs=False):
@@ -20,6 +21,20 @@ def dt2ts(dt, millisecs=False):
     if millisecs:
         return int(ts * 1000)
     return int(ts)
+
+
+def latlon2tz(lat, lon, dt=None):
+    if dt is None:
+        dt = datetime.now()
+    ts = dt2ts(dt)
+    url = TZ_API_URL.format(lat=lat, lon=lon, ts=ts)
+    res = requests.get(url)
+    if res.status_code != 200:
+        raise Exception('Could not reach Google Timezone API')
+    data = res.json()
+    if data[u'status'] != u'OK':
+        raise Exception('Could not get a valid answer from Google Timezone API')
+    return data
 
 
 def mail2username(email):

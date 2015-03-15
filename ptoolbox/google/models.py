@@ -55,6 +55,7 @@ class GooglePhoto(BaseModel):
     title = CharField()
     width = IntegerField()
     height = IntegerField()
+    status = IntegerField(null=True)  # transient field, considered blank every run
 
     class Meta:
         primary_key = CompositeKey('album', 'uuid')

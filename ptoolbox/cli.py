@@ -88,16 +88,34 @@ def sync(login, path, password, preinit):
     else:
         init_user_database(utils.mail2username(login))
 
+    # uploads existing images
     for img in list_valid_images(path, deep=True):
+        # if there exists an image unique ID in the tags, check if there's a
+        # match in the DB.
+        # - if there is a match, continue with next image.
+        # - if there's no match, ensure date tag, and upload. mark status as
+        #   synchronized.
+
+        # if there's no image unique ID in the tags, use the time property.
         if img.time == None:
+            print('ignoring %s' % img.name)
             continue  # ignore images that have no time, pollutes online album. Move them ?
-        try:
-            qs = models.GooglePhoto.select().where(models.GooglePhoto.time == img.time)
-            print("SELECT TIME", img.name, img.time, qs.count())
-        except models.GooglePhoto.DoesNotExist as e:
-            # upload it
+        qs = models.GooglePhoto.select().where(models.GooglePhoto.time == img.time)
+        cnt = qs.count()
+        if cnt == 0:
+            # upload it, ensure timestamp both in file and in gphoto:timestamp,
+            # mark as synchronized.
             print('must upload %s' % img.name)
             pass
+        elif cnt == 1:
+            # there's a unique match, mark as synchronized and continue
+            continue
+        else:
+            # more than one match means a conflict. must check later on with
+            # the MD5s as uniqueIDs.
+            continue
+
+    # downloads missing images (all the ones marked as status != synchronized)
 
     # # TODO: make a first pass to check how many we'll be downloading,
     # # conflicts, etc. THEN, synchronize. Also enables --dry-run flags !
@@ -109,6 +127,7 @@ def sync(login, path, password, preinit):
     #         img_path = os.path.join(album_path, img_filename)
     #         if not os.path.exists(img_path):
     #             download_file(img.url, img_path)
+    #             ensure_tag_file_date(img_path, img.time)
     #             print("> downloaded: img '%s'" % (img_filename,))
     #         else:
     #             print("> exists: img '%s'" % (img_filename,))

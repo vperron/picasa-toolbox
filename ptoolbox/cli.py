@@ -40,11 +40,17 @@ def cli(debug):
 @cli.command('init')
 @click.argument('login')
 @click.option('--password', prompt=True, hide_input=True)
-def init(login, password):
+@click.option('--dry-run/--no-dry-run', default=False)
+def init(login, password, dry_run):
     """Creates a $HOME/.ptoolbox/<login>.db containing a SQLite
     database of all pictures & albums for <login>.
     """
-    init_user_database(utils.mail2username(login), reset=True)
+    if dry_run:
+        db_name = '__tmp__'  # FIXME: this is a hack, would be better that dry_run actually does not write
+    else:
+        db_name = utils.mail2username(login)
+
+    init_user_database(db_name, reset=True)
     pc.authenticate(login, password)
 
     print("fetching all albums... ", end='')
@@ -90,11 +96,14 @@ def sync(login, path, password, preinit):
 
     # uploads existing images
     for img in list_valid_images(path, deep=True):
-        # if there exists an image unique ID in the tags, check if there's a
-        # match in the DB.
-        # - if there is a match, continue with next image.
-        # - if there's no match, ensure date tag, and upload. mark status as
-        #   synchronized.
+        if img.unique_id:
+            qs = models.GooglePhoto.select().where(models.GooglePhoto.unique_id == img.unique_id)
+            if qs.count() == 1:
+                continue
+            # img.ensure_time_tag(eventual_replace=now())
+            # img.upload()
+            # models.GooglePhoto.update(status = STATUS_SYNCED)
+            continue
 
         # if there's no image unique ID in the tags, use the time property.
         if img.time == None:

@@ -13,6 +13,8 @@ TAG_GPS_LON = 'GPS GPSLongitude'
 TAG_GPS_LAT_REF = 'GPS GPSLatitudeRef'
 TAG_GPS_LON_REF = 'GPS GPSLongitudeRef'
 
+TAG_IMAGE_UNIQUE_ID = 'EXIF ImageUniqueID'
+
 TAG_DATETIME_KEYS = (
     'EXIF DateTimeOriginal',
     'EXIF DateTimeDigitized',
@@ -42,6 +44,10 @@ def tag_str2dt(s):
 
 def dt2str(dt, separator=' '):
     return dt.strftime('%Y-%m-%d{0}%H%M%S'.format(separator))
+
+
+def parse_exif_unique_id(tags):
+    return tags.get(TAG_IMAGE_UNIQUE_ID, None)
 
 
 def parse_exif_time(tags):
@@ -81,10 +87,11 @@ def list_valid_images(path, deep=True):
         rel_path = os.path.relpath(e.path, path)
         md5 = md5sum(e.path)
         tags = get_tags(e.path)
-        time = parse_exif_time(tags)
+        time = parse_exif_time(tags)  # this step may take time, may rely on online timezone service
+        unique_id = parse_exif_unique_id(tags)
         try:
             width, height = jpeg_size(e.path)
         except ValueError, e:
             continue
-        img = ImageInfo(e.path, width, height, md5, time, rel_path=rel_path)
+        img = ImageInfo(e.path, width, height, md5, time, unique_id, rel_path=rel_path)
         yield img

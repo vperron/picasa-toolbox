@@ -12,9 +12,10 @@ class ImageInfo(object):
     directory, album title...
     """
 
-    def __init__(self, path, width, height, checksum, time=None, rel_path=None):
+    def __init__(self, path, width, height, checksum, time=None, unique_id=None, rel_path=None):
         self.path = path
         self.time = time
+        self.unique_id = unique_id
         self.checksum = checksum
         self.name = get_filename(path)
         self.directory = get_dirname(path)

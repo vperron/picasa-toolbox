@@ -56,6 +56,7 @@ class GooglePhoto(BaseModel):
     width = IntegerField()
     height = IntegerField()
     status = IntegerField(null=True)  # transient field, considered blank every run
+    unique_id = CharField(null=True)
 
     class Meta:
         primary_key = CompositeKey('album', 'uuid')
@@ -73,6 +74,7 @@ class GooglePhoto(BaseModel):
             'width': int(g_json_value(raw, 'width', 'gphoto')),
             'height': int(g_json_value(raw, 'height', 'gphoto')),
             'album': g_json_value(raw, 'albumid', 'gphoto'),
+            'unique_id': g_json_value(raw['exif$tags'], 'imageUniqueID', 'exif'),
         }
         return GooglePhoto(**res)
 
@@ -81,7 +83,7 @@ def init_database(name, reset=False):
     db.init(name)
     db.connect()
     if reset:
-        db.drop_tables([GoogleAlbum, GooglePhoto])
+        db.drop_tables([GoogleAlbum, GooglePhoto], safe=True)
         db.create_tables([GoogleAlbum, GooglePhoto])
 
 
